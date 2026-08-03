@@ -18,7 +18,7 @@ st.sidebar.image(logo)
 st.title("Mwache Catchment Activities")
 
 st.markdown("""
-    This multipage app template demonstrates various interactive web apps created using [streamlit](https://streamlit.io) and [leafmap](https://leafmap.org). It is an open-source project and you are very welcome to contribute to the [GitHub repository](https://github.com/opengeos/streamlit-map-template).
+    This multipage app displays maps and dashboards for the various mwache catchment restoration interventions (https://www.kwscrp.org/mwache-dam-project-watershed-management).
     """)
 
 st.header("Instructions")
