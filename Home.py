@@ -5,7 +5,8 @@ st.set_page_config(layout="wide")
 
 # Customize the sidebar
 markdown = """
- This multipage app displays maps and dashboards for the various mwache catchment restoration interventions (https://www.kwscrp.org/mwache-dam-project-watershed-management).
+ This multipage app displays maps and dashboards for the various mwache catchment restoration interventions 
+ (https://www.kwscrp.org/mwache-dam-project-watershed-management).
 """
 
 st.sidebar.title("About")
@@ -17,7 +18,7 @@ st.sidebar.image(logo)
 st.title("Mwache Catchment Restoration")
 
 st.markdown("""
-    This multipage app displays maps and dashboards for the various mwache catchment restoration interventions (https://www.kwscrp.org/mwache-dam-project-watershed-management).
+    .......
     """)
 
 st.subheader("Background")
@@ -26,7 +27,12 @@ markdown = """
 Mwache catchment covers an area of 3647 km² and stretches across coordinates 38.6327 west,
 39.5416 East, and -3.53513 North, -4.10244 South and stretches across Taita Taveta, Kwale, and
 Kilifi Counties.
-This Catchment which is the source of water for the Mwache dam has undergone significant degradation
+This Catchment which is the source of water for the Mwache dam has undergone significant degradation over the years 
+necessitating the need for restoration interventions. 
+
+Key Watershed interventions include:
+1. Sustainable Land Management (SLM) techniques; Terracing and soil stabilization, Gabion Construction
+2. Livelihood Enhancement; Support for WRUAs, Farmer Field Schools (FFS) and Farmer Led Irrigation Development (FLID)
 
 """
 
