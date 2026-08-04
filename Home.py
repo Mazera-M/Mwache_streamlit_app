@@ -5,8 +5,7 @@ st.set_page_config(layout="wide")
 
 # Customize the sidebar
 markdown = """
-A Streamlit map template
-<https://github.com/opengeos/streamlit-map-template>
+ This multipage app displays maps and dashboards for the various mwache catchment restoration interventions (https://www.kwscrp.org/mwache-dam-project-watershed-management).
 """
 
 st.sidebar.title("About")
@@ -21,7 +20,7 @@ st.markdown("""
     This multipage app displays maps and dashboards for the various mwache catchment restoration interventions (https://www.kwscrp.org/mwache-dam-project-watershed-management).
     """)
 
-st.header("Background")
+st.subheader("Background")
 
 markdown = """
 Mwache catchment covers an area of 3647 km² and stretches across coordinates 38.6327 west,
