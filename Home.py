@@ -4,13 +4,14 @@ import leafmap.foliumap as leafmap
 st.set_page_config(layout="wide")
 
 # Customize the sidebar
-markdown = """
- This multipage app displays maps and dashboards for the various mwache catchment restoration interventions 
- (https://www.kwscrp.org/mwache-dam-project-watershed-management).
-"""
 
 st.sidebar.title("About")
-st.sidebar.info(markdown)
+st.sidebar.info(""""
+    This multipage app displays maps and dashboards for the various mwache catchment restoration interventions 
+    (https://www.kwscrp.org/mwache-dam-project-watershed-management).
+    
+   """)
+
 logo = "https://i.imgur.com/UbOXYAU.png"
 st.sidebar.image(logo)
 
@@ -20,6 +21,8 @@ st.title("Mwache Catchment Restoration")
 st.markdown("""
     .......
     """)
+
+st.info("Click on the left sidebar menu to navigate to the different apps.")
 
 st.subheader("Background")
 
