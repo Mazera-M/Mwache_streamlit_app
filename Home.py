@@ -39,8 +39,6 @@ Key Watershed interventions include:
 
 """
 
-st.markdown(markdown)
-
 m = leafmap.Map(center=[-3.8, 39.0], zoom=7)
 axes_url = "https://github.com/Mazera-M/Mwache_streamlit_app/blob/main/data/mwache_axes.geojson"
 reservoir_url ="https://github.com/Mazera-M/Mwache_streamlit_app/blob/main/data/mwache_reservoir.geojson"
@@ -54,8 +52,6 @@ m.add_points_from_xy(
     axes_url,
     x="longitude",
     y="latitude",
-    color_column="reservoir",
-    icon_names=["gear", "map", "leaf", "globe"],
     spin=True,
     add_legend=True,
 )
