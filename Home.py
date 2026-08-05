@@ -26,7 +26,7 @@ st.info("Click on the left sidebar menu to navigate to the different map layers.
 
 st.subheader("Background")
 
-markdown = """
+st.markdown("""
 Mwache catchment covers an area of 3647 km² and stretches across coordinates 38.6327 west,
 39.5416 East, and -3.53513 North, -4.10244 South and stretches across Taita Taveta, Kwale, and
 Kilifi Counties.
@@ -37,7 +37,7 @@ Key Watershed interventions include:
 1. Sustainable Land Management (SLM) techniques; Terracing and soil stabilization, Gabion Construction
 2. Livelihood Enhancement; Support for WRUAs, Farmer Field Schools (FFS) and Farmer Led Irrigation Development (FLID)
 
-"""
+""")
 
 m = leafmap.Map(center=[-3.8, 39.0], zoom=7)
 axes_url = "https://github.com/Mazera-M/Mwache_streamlit_app/blob/main/data/mwache_axes.geojson"
