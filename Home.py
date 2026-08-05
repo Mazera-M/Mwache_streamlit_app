@@ -6,7 +6,7 @@ st.set_page_config(layout="wide")
 # Customize the sidebar
 
 st.sidebar.title("About")
-st.sidebar.info(""""
+st.sidebar.info("""
     This multipage app displays maps and dashboards for the various mwache catchment restoration interventions 
     (https://www.kwscrp.org/mwache-dam-project-watershed-management).
     
@@ -41,19 +41,23 @@ Key Watershed interventions include:
 
 st.markdown(markdown)
 
-m = leafmap.Map(center=[40, -100], zoom=4)
-dam = "https://raw.githubusercontent.com/giswqs/leafmap/master/examples/data/us_cities.csv"
-wruas = "https://github.com/Mazera-M/Mwache_streamlit_app/blob/main/data/mwache_wruas.geojson"
+m = leafmap.Map(center=[-3.8, 39.0], zoom=7)
+axes_url = "https://raw.githubusercontent.com/Mazera-M/Mwache_streamlit_app/main/data/dam_axes.geojson"
+reservoir_url = "https://raw.githubusercontent.com/Mazera-M/Mwache_streamlit_app/main/data/mwache_reservoir.geojson"
+wruas_url = "https://raw.githubusercontent.com/Mazera-M/Mwache_streamlit_app/main/data/mwache_wruas.geojson"
 
-m.add_geojson(wruas, layer_name="mwache_wruas")
+
+m.add_geojson(wruas_url, layer_name="mwache_wruas")
+m.add_geojson(reservoir_url, layer_name="mwache_reservoir")
+m.add_geojson(axes_url, layer_name="mwache_axes")
 m.add_points_from_xy(
-    dam,
+    axes_url,
     x="longitude",
     y="latitude",
-    color_column="region",
+    color_column="reservoir",
     icon_names=["gear", "map", "leaf", "globe"],
     spin=True,
     add_legend=True,
 )
-m.add_basemap("OpenTopoMap")
+
 m.to_streamlit(height=500)
