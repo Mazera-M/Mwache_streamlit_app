@@ -222210,40 +222210,6 @@
         "stroke-width": 3,
         "__geolibre_kml_icon_href": "http://maps.google.com/mapfiles/kml/pushpin/ylw-pushpin.png"
       }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          39.47643523839065,
-          -3.952759958248617,
-          0
-        ]
-      },
-      "properties": {
-        "name": "Lower Check Dam Axis",
-        "marker-color": "#000000",
-        "marker-opacity": 0.77,
-        "__geolibre_kml_icon_href": "http://maps.google.com/mapfiles/kml/pushpin/wht-pushpin.png"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          39.5202651199293,
-          -3.991035649879987,
-          0
-        ]
-      },
-      "properties": {
-        "name": "Main Dam Axis",
-        "marker-color": "#000000",
-        "marker-opacity": 0.72,
-        "__geolibre_kml_icon_href": "http://maps.google.com/mapfiles/kml/pushpin/wht-pushpin.png"
-      }
     }
   ]
 }

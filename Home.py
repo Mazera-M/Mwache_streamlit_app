@@ -22,7 +22,7 @@ st.markdown("""
     .......
     """)
 
-st.info("Click on the left sidebar menu to navigate to the different apps.")
+st.info("Click on the left sidebar menu to navigate to the different map layers.")
 
 st.subheader("Background")
 
@@ -41,6 +41,19 @@ Key Watershed interventions include:
 
 st.markdown(markdown)
 
-m = leafmap.Map(minimap_control=True)
+m = leafmap.Map(center=[40, -100], zoom=4)
+dam = "https://raw.githubusercontent.com/giswqs/leafmap/master/examples/data/us_cities.csv"
+wruas = "https://github.com/Mazera-M/Mwache_streamlit_app/blob/main/data/mwache_wruas.geojson"
+
+m.add_geojson(wruas, layer_name="mwache_wruas")
+m.add_points_from_xy(
+    dam,
+    x="longitude",
+    y="latitude",
+    color_column="region",
+    icon_names=["gear", "map", "leaf", "globe"],
+    spin=True,
+    add_legend=True,
+)
 m.add_basemap("OpenTopoMap")
 m.to_streamlit(height=500)
