@@ -4,3 +4,6 @@ The webapp was developed based on a streamlit template cutesy of (https://github
 
 Web App URL: <https://mwachecatchment.streamlit.app/>
 
+## Demo
+
+![](https://i.imgur.com/6lj0oAO.png)
