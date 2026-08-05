@@ -42,9 +42,9 @@ Key Watershed interventions include:
 st.markdown(markdown)
 
 m = leafmap.Map(center=[-3.8, 39.0], zoom=7)
-axes_url = "https://raw.githubusercontent.com/Mazera-M/Mwache_streamlit_app/main/data/dam_axes.geojson"
-reservoir_url = "https://raw.githubusercontent.com/Mazera-M/Mwache_streamlit_app/main/data/mwache_reservoir.geojson"
-wruas_url = "https://raw.githubusercontent.com/Mazera-M/Mwache_streamlit_app/main/data/mwache_wruas.geojson"
+axes_url = "
+reservoir_url =
+wruas_url = ""
 
 
 m.add_geojson(wruas_url, layer_name="mwache_wruas")
