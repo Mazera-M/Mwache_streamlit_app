@@ -12,10 +12,11 @@
         ]
       },
       "properties": {
-        "name": "Lower Check Dam Axis",
-        "marker-color": "#000000",
-        "marker-opacity": 0.77,
-        "__geolibre_kml_icon_href": "http://maps.google.com/mapfiles/kml/pushpin/wht-pushpin.png"
+        "Name": "Lower Check Dam Axis",
+        "FID": 1,
+        "Name1": "LCD",
+        "y": -3.95276,
+        "x": 39.476435
       }
     },
     {
@@ -29,10 +30,11 @@
         ]
       },
       "properties": {
-        "name": "Main Dam Axis",
-        "marker-color": "#000000",
-        "marker-opacity": 0.72,
-        "__geolibre_kml_icon_href": "http://maps.google.com/mapfiles/kml/pushpin/wht-pushpin.png"
+        "Name": "Main Dam Axis",
+        "FID": 2,
+        "Name1": "MD",
+        "y": -3.991036,
+        "x": 39.520265
       }
     }
   ]
