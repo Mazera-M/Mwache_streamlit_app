@@ -45,7 +45,7 @@ wruas_url = "https://raw.githubusercontent.com/Mazera-M/Mwache_streamlit_app/ref
 m.add_geojson(wruas_url, layer_name="mwache_wruas")
 m.add_geojson(axes_url, layer_name="mwachedam_axes")
 
-m.to_streamlit(height=500)
+m.to_streamlit(height=700)
 
 with st.expander("See source code"):
     st.code("""
@@ -56,7 +56,7 @@ wruas_url = "https://raw.githubusercontent.com/Mazera-M/Mwache_streamlit_app/ref
 
 m.add_geojson(wruas_url, layer_name="mwache_wruas")
 m.add_geojson(axes_url, layer_name="mwachedam_axes")
-m.to_streamlit(height=500)
+m.to_streamlit(height=700)
     """, language="python")        
         
        
