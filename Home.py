@@ -50,10 +50,7 @@ with st.expander("See source code"):
            axes_url,
            x="longitude",
            y="latitude",
-           color_column="wruas_url",
-           icon_names=["gear", "map", "leaf", "globe"],
-           spin=True,
-           add_legend=True,
+          
         )
     
     m.to_streamlit(height=500)
