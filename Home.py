@@ -45,7 +45,7 @@ axes_url = "https://raw.githubusercontent.com/Mazera-M/Mwache_streamlit_app/refs
 wruas_url = "https://raw.githubusercontent.com/Mazera-M/Mwache_streamlit_app/refs/heads/main/data/mwache_wruas.geojson"
 try:
     m.add_geojson(wruas_url, layer_name="mwache_wruas")
-    m.add_geojson(axes_url, layer_name="mwache_axes")
+    m.add_geojson(axes_url, layer_name="mwachedam_axes")
     m.add_points_from_xy(
         axes_url,
         x="longitude",
