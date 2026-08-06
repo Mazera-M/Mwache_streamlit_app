@@ -37,17 +37,26 @@ st.info("Click on the left sidebar menu to navigate to the different map layers.
 
 st.subheader("Mwache Catchment Location Map")
 
-with st.expander("See source code"):
-    with st.echo():
-        
 # Use raw GitHub URLs so the GeoJSON files can be loaded directly
-       m = leafmap.Map(center=[40, -100], zoom=4)
-       axes_url = "https://raw.githubusercontent.com/Mazera-M/Mwache_streamlit_app/refs/heads/main/data/mwachedam_axes.geojson"
-       wruas_url = "https://raw.githubusercontent.com/Mazera-M/Mwache_streamlit_app/refs/heads/main/data/mwache_wruas.geojson"
+m = leafmap.Map(center=[40, -100], zoom=4)
+axes_url = "https://raw.githubusercontent.com/Mazera-M/Mwache_streamlit_app/refs/heads/main/data/mwachedam_axes.geojson"
+wruas_url = "https://raw.githubusercontent.com/Mazera-M/Mwache_streamlit_app/refs/heads/main/data/mwache_wruas.geojson"
 
-       m.add_geojson(wruas_url, layer_name="mwache_wruas")
-       m.add_geojson(axes_url, layer_name="mwachedam_axes")
-    
-    m.to_streamlit(height=500)        
+m.add_geojson(wruas_url, layer_name="mwache_wruas")
+m.add_geojson(axes_url, layer_name="mwachedam_axes")
+
+m.to_streamlit(height=500)
+
+with st.expander("See source code"):
+    st.code("""
+# Use raw GitHub URLs so the GeoJSON files can be loaded directly
+m = leafmap.Map(center=[40, -100], zoom=4)
+axes_url = "https://raw.githubusercontent.com/Mazera-M/Mwache_streamlit_app/refs/heads/main/data/mwachedam_axes.geojson"
+wruas_url = "https://raw.githubusercontent.com/Mazera-M/Mwache_streamlit_app/refs/heads/main/data/mwache_wruas.geojson"
+
+m.add_geojson(wruas_url, layer_name="mwache_wruas")
+m.add_geojson(axes_url, layer_name="mwachedam_axes")
+m.to_streamlit(height=500)
+    """, language="python")        
         
        
