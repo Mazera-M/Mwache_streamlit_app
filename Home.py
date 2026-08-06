@@ -40,18 +40,20 @@ Key Watershed interventions include:
 """)
 
 m = leafmap.Map(center=[-3.8, 39.0], zoom=7)
-axes_url = "https://github.com/Mazera-M/Mwache_streamlit_app/blob/main/data/mwache_axes.geojson"
-reservoir_url ="https://github.com/Mazera-M/Mwache_streamlit_app/blob/main/data/mwache_reservoir.geojson"
+# Use raw GitHub URLs so the GeoJSON files can be loaded directly
+axes_url = "https://raw.githubusercontent.com/Mazera-M/Mwache_streamlit_app/main/data/mwache_axes.geojson"
+reservoir_url = "https://raw.githubusercontent.com/Mazera-M/Mwache_streamlit_app/main/data/mwache_reservoir.geojson"
 
-
-m.add_geojson(reservoir_url, layer_name="mwache_reservoir")
-m.add_geojson(axes_url, layer_name="mwache_axes")
-m.add_points_from_xy(
-    axes_url,
-    x="longitude",
-    y="latitude",
-    spin=True,
-    add_legend=True,
-)
-
-m.to_streamlit(height=500)
+try:
+    m.add_geojson(reservoir_url, layer_name="mwache_reservoir")
+    m.add_geojson(axes_url, layer_name="mwache_axes")
+    m.add_points_from_xy(
+        axes_url,
+        x="longitude",
+        y="latitude",
+        spin=True,
+        add_legend=True,
+    )
+    m.to_streamlit(height=500)
+except Exception as e:
+    st.error(f"Failed to load map data: {e}")
