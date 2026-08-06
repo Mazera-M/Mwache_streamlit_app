@@ -18,12 +18,6 @@ st.sidebar.image(logo)
 # Customize page title
 st.title("Mwache Catchment Restoration")
 
-st.markdown("""
-    .......
-    """)
-
-st.info("Click on the left sidebar menu to navigate to the different map layers.")
-
 st.subheader("Background")
 
 st.markdown("""
@@ -39,20 +33,27 @@ Key Watershed interventions include:
 
 """)
 
-m = leafmap.Map(center=[40, -100], zoom=4)
-# Use raw GitHub URLs so the GeoJSON files can be loaded directly
-axes_url = "https://raw.githubusercontent.com/Mazera-M/Mwache_streamlit_app/refs/heads/main/data/mwachedam_axes.geojson"
-wruas_url = "https://raw.githubusercontent.com/Mazera-M/Mwache_streamlit_app/refs/heads/main/data/mwache_wruas.geojson"
-try:
-    m.add_geojson(wruas_url, layer_name="mwache_wruas")
-    m.add_geojson(axes_url, layer_name="mwachedam_axes")
-    m.add_points_from_xy(
-        axes_url,
-        x="longitude",
-        y="latitude",
-        spin=True,
-        add_legend=True,
-    )
+st.info("Click on the left sidebar menu to navigate to the different map layers.")
+
+st.title("Mwache Catchment Location Map")
+
+with st.expander("See source code"):
+    with st.echo():
+       # Use raw GitHub URLs so the GeoJSON files can be loaded directly
+       m = leafmap.Map(center=[40, -100], zoom=4)
+       axes_url = "https://raw.githubusercontent.com/Mazera-M/Mwache_streamlit_app/refs/heads/main/data/mwachedam_axes.geojson"
+       wruas_url = "https://raw.githubusercontent.com/Mazera-M/Mwache_streamlit_app/refs/heads/main/data/mwache_wruas.geojson"
+
+       m.add_geojson(wruas_url, layer_name="mwache_wruas")
+       m.add_geojson(axes_url, layer_name="mwachedam_axes")
+       m.add_points_from_xy(
+           axes_url,
+           x="longitude",
+           y="latitude",
+           color_column="wruas_url",
+           icon_names=["gear", "map", "leaf", "globe"],
+           spin=True,
+           add_legend=True,
+        )
+    
     m.to_streamlit(height=500)
-except Exception as e:
-    st.error(f"Failed to load map data: {e}")
