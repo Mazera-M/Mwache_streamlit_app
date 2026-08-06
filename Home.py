@@ -41,9 +41,8 @@ Key Watershed interventions include:
 
 m = leafmap.Map(center=[40, -100], zoom=4)
 # Use raw GitHub URLs so the GeoJSON files can be loaded directly
-axes_url = "https://raw.githubusercontent.com/Mazera-M/Mwache_streamlit_app/refs/heads/main/data/mwache_axes.geojson"
+axes_url = "https://raw.githubusercontent.com/Mazera-M/Mwache_streamlit_app/refs/heads/main/data/mwachedam_axes.geojson"
 wruas_url = "https://raw.githubusercontent.com/Mazera-M/Mwache_streamlit_app/refs/heads/main/data/mwache_wruas.geojson"
-
 try:
     m.add_geojson(wruas_url, layer_name="mwache_wruas")
     m.add_geojson(axes_url, layer_name="mwache_axes")
