@@ -46,11 +46,5 @@ with st.expander("See source code"):
 
        m.add_geojson(wruas_url, layer_name="mwache_wruas")
        m.add_geojson(axes_url, layer_name="mwachedam_axes")
-       m.add_points_from_xy(
-           axes_url,
-           x="longitude",
-           y="latitude",
-          
-        )
     
     m.to_streamlit(height=500)
