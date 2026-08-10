@@ -40,10 +40,12 @@ st.subheader("Mwache Catchment Location Map")
 # Use raw GitHub URLs so the GeoJSON files can be loaded directly
 m = leafmap.Map(center=[40, -100], zoom=4)
 axes_url = "https://raw.githubusercontent.com/Mazera-M/Mwache_streamlit_app/refs/heads/main/data/mwachedam_axes.geojson"
+reservoir_url = "https://raw.githubusercontent.com/Mazera-M/Mwache_streamlit_app/main/data/mwachedam_reservoir.geojson"
 wruas_url = "https://raw.githubusercontent.com/Mazera-M/Mwache_streamlit_app/refs/heads/main/data/mwache_wruas.geojson"
 
 m.add_geojson(wruas_url, layer_name="mwache_wruas")
 m.add_geojson(axes_url, layer_name="mwachedam_axes")
+m.add_geojson(reservoir_url, layer_name="mwachedam_reservoir")
 
 m.to_streamlit(height=700)
 

@@ -16,8 +16,10 @@ m = leafmap.Map(center=[40, -100], zoom=6)
 m.add_basemap("HYBRID")
 
 wruas_url = "https://raw.githubusercontent.com/Mazera-M/Mwache_streamlit_app/refs/heads/main/data/mwache_wruas.geojson"
+terraces14_url = "https://raw.githubusercontent.com/Mazera-M/Mwache_streamlit_app/main/data/mwacheterraces_14.geojson"
 
 m.add_geojson(wruas_url, layer_name="mwache_wruas")
+m.add_geojson(terraces14_url, layer_name="mwacheterraces_14")
 
 m.to_streamlit(height=700)
 
