@@ -65,9 +65,9 @@ legend_html = '''
 '''
 
 # attach legend to the underlying folium map
+# Use branca.Html to ensure the HTML is added correctly to the folium root
 try:
-    # prefer adding via branca element to ensure compatibility with Streamlit
-    legend = branca.element.Element(legend_html)
+    legend = branca.element.Html(legend_html, script=True)
     m.folium_map.get_root().html.add_child(legend)
 except Exception:
     # fallback: try adding via folium Element
