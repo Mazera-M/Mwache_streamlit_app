@@ -48,6 +48,8 @@ m.add_geojson(
         "color": "black",
         "weight": 2,
     },
+    popup=None,
+    tooltip_property="WRUA_NAME",
 )
 
 # display in Streamlit
