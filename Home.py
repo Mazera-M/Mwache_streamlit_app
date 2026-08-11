@@ -44,6 +44,7 @@ axes_url = "https://raw.githubusercontent.com/Mazera-M/Mwache_streamlit_app/refs
 reservoir_url = "https://raw.githubusercontent.com/Mazera-M/Mwache_streamlit_app/main/data/mwachedam_reservoir.geojson"
 wruas_url = "https://raw.githubusercontent.com/Mazera-M/Mwache_streamlit_app/refs/heads/main/data/mwache_wruas.geojson"
 
+m.add_geojson(reservoir_url, layer_name="mwachedam_reservoir")
 m.add_geojson(
     wruas_url,
     layer_name="mwache_wruas",
@@ -66,9 +67,6 @@ m.add_geojson(
         fill_color="black",
     ),
 )
-
-m.add_geojson(reservoir_url, layer_name="mwachedam_reservoir")
-
 m.to_streamlit(height=700)
 
 with st.expander("See source code"):
@@ -78,15 +76,6 @@ m = leafmap.Map(center=[40, -100], zoom=4)
 axes_url = "https://raw.githubusercontent.com/Mazera-M/Mwache_streamlit_app/refs/heads/main/data/mwachedam_axes.geojson"
 wruas_url = "https://raw.githubusercontent.com/Mazera-M/Mwache_streamlit_app/refs/heads/main/data/mwache_wruas.geojson"
 
-m.add_geojson(
-    wruas_url,
-    layer_name="mwache_wruas",
-    style_function=lambda feature: {
-        "fillColor": "#ffffff00",
-        "color": "black",
-        "weight": 2,
-    },
-)
 m.add_geojson(axes_url, layer_name="mwachedam_axes")
 m.to_streamlit(height=700)
     """, language="python")        
