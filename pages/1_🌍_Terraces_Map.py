@@ -49,6 +49,13 @@ m.add_geojson(
     },
 )
 
+# add a legend
+m.add_legend(
+    title="Legend",
+    labels=["Terraces (6m)", "Terraces (14m)", "WRUAs"],
+    colors=["purple", "brown", "#00000000"],
+)
+
 
 # display in Streamlit
 m.to_streamlit(height=700)
