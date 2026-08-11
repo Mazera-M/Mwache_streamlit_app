@@ -20,7 +20,6 @@ terraces6_url = "https://raw.githubusercontent.com/Mazera-M/Mwache_streamlit_app
 terraces14_url = "https://raw.githubusercontent.com/Mazera-M/Mwache_streamlit_app/refs/heads/main/data/mwacheterraces_14.geojson"
 
 m.add_geojson(wruas_url, layer_name="mwache_wruas")
-m.
 m.add_geojson(terraces6_url, layer_name="mwacheterraces_6")
 m.add_geojson(terraces14_url, layer_name="mwacheterraces_14")
 
