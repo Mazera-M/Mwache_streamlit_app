@@ -55,18 +55,16 @@ m.add_geojson(
 )
 
 # Add axes as GeoJSON but render point features as black circle icons
-m.folium_map.add_child(
-    folium.GeoJson(
-        axes_url,
-        name="mwachedam_axes",
-        point_to_layer=lambda feature, latlng: folium.CircleMarker(
-            location=latlng,
-            radius=6,
-            color="black",
-            fill=True,
-            fill_color="black",
-        ),
-    )
+m.add_geojson(
+    axes_url,
+    layer_name="mwachedam_axes",
+    point_to_layer=lambda feature, latlng: folium.CircleMarker(
+        location=latlng,
+        radius=6,
+        color="black",
+        fill=True,
+        fill_color="black",
+    ),
 )
 
 m.add_geojson(reservoir_url, layer_name="mwachedam_reservoir")
