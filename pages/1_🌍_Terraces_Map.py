@@ -43,12 +43,14 @@ m.add_geojson(
 m.add_geojson(
     wruas_url,
     layer_name="mwache_wruas",
+    info_mode="on_hover",
+    tooltip_property="WRUA_NAME",
+    popup_property=None,
     style_function=lambda feature: {
         "fillColor": "#ffffff00",
         "color": "black",
         "weight": 2,
     },
-    popup=False,
 )
 
 # display in Streamlit
