@@ -53,7 +53,7 @@ m.add_geojson(
 m.add_legend(
     title="Legend",
     labels=["Terraces (6m)", "Terraces (14m)", "WRUAs"],
-    colors=["purple", "brown", "#00000000"],
+    colors=["purple", "brown", "black"],
 )
 
 
