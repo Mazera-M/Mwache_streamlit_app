@@ -23,20 +23,6 @@ m.add_geojson(wruas_url, layer_name="mwache_wruas")
 m.add_geojson(terraces6_url, layer_name="mwacheterraces_6")
 m.add_geojson(terraces14_url, layer_name="mwacheterraces_14")
 
-geojson_path = "data/mwache_wruas.geojson"
-
-# style function that sets outline to black
-style_function = lambda feature: {
-    "color": "black",      # outline color (stroke)
-    "weight": 2,           # stroke width
-    "opacity": 1.0,
-    "fillColor": "#ffffff",# optional fill
-    "fillOpacity": 0.1,
-}
-
-# leafmap add_geojson accepts a style (callable or dict)
-m.add_geojson(geojson_path, layer_name="WRUAs", style=style_function)
-
 # display in Streamlit
 m.to_streamlit(height=700)
 
