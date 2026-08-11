@@ -1,5 +1,6 @@
 import streamlit as st
 import leafmap.foliumap as leafmap
+import folium
 
 st.sidebar.title("About")
 st.sidebar.info("""
@@ -49,14 +50,25 @@ m.add_geojson(
     },
 )
 
-# add a legend
-m.add_legend(
-    title="Legend",
-    labels=["Terraces (6m)", "Terraces (14m)", "WRUAs"],
-    colors=["purple", "brown", "black"],
-)
+# add simple HTML legend compatible with Streamlit display
+legend_html = '''
+<div style="position: fixed; 
+     bottom: 50px; left: 10px; width: 160px; height: 110px; 
+     background-color: white; z-index:9999; padding: 10px; 
+     border:2px solid grey; border-radius:6px;">
+  <h4 style="margin:0 0 6px 0; font-size:14px;">Legend</h4>
+  <div><span style="display:inline-block;width:12px;height:12px;background:purple;margin-right:6px;"></span>Terraces (6m)</div>
+  <div style="margin-top:6px;"><span style="display:inline-block;width:12px;height:12px;background:brown;margin-right:6px;"></span>Terraces (14m)</div>
+  <div style="margin-top:6px;"><span style="display:inline-block;width:12px;height:12px;border:2px solid black;margin-right:6px;vertical-align:middle;"></span>WRUAs</div>
+</div>
+'''
 
-
+# attach legend to the underlying folium map
+try:
+    m.folium_map.get_root().html.add_child(folium.Element(legend_html))
+except Exception:
+    # fallback: try adding to map directly
+    m.add_child(folium.Element(legend_html))
 # display in Streamlit
 m.to_streamlit(height=700)
 
