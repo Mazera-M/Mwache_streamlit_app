@@ -19,9 +19,35 @@ wruas_url = "https://raw.githubusercontent.com/Mazera-M/Mwache_streamlit_app/ref
 terraces6_url = "https://raw.githubusercontent.com/Mazera-M/Mwache_streamlit_app/refs/heads/main/data/mwacheterraces_6.geojson"
 terraces14_url = "https://raw.githubusercontent.com/Mazera-M/Mwache_streamlit_app/refs/heads/main/data/mwacheterraces_14.geojson"
 
-m.add_geojson(wruas_url, layer_name="mwache_wruas")
-m.add_geojson(terraces6_url, layer_name="mwacheterraces_6")
-m.add_geojson(terraces14_url, layer_name="mwacheterraces_14")
+m.add_geojson(
+    terraces6_url,
+    layer_name="mwacheterraces_6",
+    style_function=lambda feature: {
+        "fillColor": "purple",
+        "color": "purple",
+        "weight": 2,
+    },
+)
+
+m.add_geojson(
+    terraces14_url,
+    layer_name="mwacheterraces_14",
+    style_function=lambda feature: {
+        "fillColor": "brown",
+        "color": "brown",
+        "weight": 2,
+    },
+)
+m.add_geojson(
+    wruas_url,
+    layer_name="mwache_wruas",
+    style_function=lambda feature: {
+        "fillColor": "#ffffff00",
+        "color": "black",
+        "weight": 2,
+    },
+)
+
 
 # display in Streamlit
 m.to_streamlit(height=700)
