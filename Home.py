@@ -45,6 +45,7 @@ reservoir_url = "https://raw.githubusercontent.com/Mazera-M/Mwache_streamlit_app
 wruas_url = "https://raw.githubusercontent.com/Mazera-M/Mwache_streamlit_app/refs/heads/main/data/mwache_wruas.geojson"
 
 m.add_geojson(reservoir_url, layer_name="mwachedam_reservoir")
+m.add_geojson(axes_url, layer_name="mwachedam_axes")
 m.add_geojson(
     wruas_url,
     layer_name="mwache_wruas",
@@ -55,29 +56,6 @@ m.add_geojson(
     },
 )
 
-# Add axes as GeoJSON but render point features as black circle icons
-m.add_geojson(
-    axes_url,
-    layer_name="mwachedam_axes",
-    point_to_layer=lambda feature, latlng: folium.CircleMarker(
-        location=latlng,
-        radius=6,
-        color="black",
-        fill=True,
-        fill_color="black",
-    ),
-)
-m.to_streamlit(height=700)
-
-with st.expander("See source code"):
-    st.code("""
-# Use raw GitHub URLs so the GeoJSON files can be loaded directly
-m = leafmap.Map(center=[40, -100], zoom=4)
-axes_url = "https://raw.githubusercontent.com/Mazera-M/Mwache_streamlit_app/refs/heads/main/data/mwachedam_axes.geojson"
-wruas_url = "https://raw.githubusercontent.com/Mazera-M/Mwache_streamlit_app/refs/heads/main/data/mwache_wruas.geojson"
-
-m.add_geojson(axes_url, layer_name="mwachedam_axes")
-m.to_streamlit(height=700)
-    """, language="python")        
+m.to_streamlit(height=700)     
         
        
