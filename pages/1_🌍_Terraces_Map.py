@@ -48,7 +48,7 @@ m.add_geojson(
         "color": "black",
         "weight": 2,
     },
-    popup=None,
+    popup_property="WRUA_NAME",
     tooltip_property="WRUA_NAME",
 )
 
