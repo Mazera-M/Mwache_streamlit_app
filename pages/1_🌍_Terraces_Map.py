@@ -1,6 +1,7 @@
 import streamlit as st
 import leafmap.foliumap as leafmap
 import folium
+import branca
 
 st.sidebar.title("About")
 st.sidebar.info("""
@@ -65,10 +66,15 @@ legend_html = '''
 
 # attach legend to the underlying folium map
 try:
-    m.folium_map.get_root().html.add_child(folium.Element(legend_html))
+    # prefer adding via branca element to ensure compatibility with Streamlit
+    legend = branca.element.Element(legend_html)
+    m.folium_map.get_root().html.add_child(legend)
 except Exception:
-    # fallback: try adding to map directly
-    m.add_child(folium.Element(legend_html))
+    # fallback: try adding via folium Element
+    try:
+        m.folium_map.get_root().html.add_child(folium.Element(legend_html))
+    except Exception:
+        m.add_child(folium.Element(legend_html))
 # display in Streamlit
 m.to_streamlit(height=700)
 
