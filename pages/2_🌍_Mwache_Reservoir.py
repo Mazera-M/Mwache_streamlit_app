@@ -7,7 +7,7 @@ st.sidebar.info("""
     This map displays all the catchment interventions within the Mwache dam reservoir.
 """)
 
-logo = ""
+logo = "https://i.imgur.com/UbOXYAU.png"
 st.sidebar.image(logo)
 
 
