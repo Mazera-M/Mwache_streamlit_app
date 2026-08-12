@@ -19,6 +19,7 @@ m.add_basemap("HYBRID")
 wruas_url = "https://raw.githubusercontent.com/Mazera-M/Mwache_streamlit_app/refs/heads/main/data/mwache_wruas.geojson"
 terraces6_url = "https://raw.githubusercontent.com/Mazera-M/Mwache_streamlit_app/refs/heads/main/data/mwacheterraces_6.geojson"
 terraces14_url = "https://raw.githubusercontent.com/Mazera-M/Mwache_streamlit_app/refs/heads/main/data/mwacheterraces_14.geojson"
+damterraces_url = "https://raw.githubusercontent.com/Mazera-M/Mwache_streamlit_app/refs/heads/main/data/MwacheDam_terraces.geojson"
 
 m.add_geojson(
     terraces6_url,
@@ -53,6 +54,16 @@ m.add_geojson(
     },
 )
 
+m.add_geojson(
+    damterraces_url,
+    layer_name="mwachedam_terraces",
+    style_function=lambda feature: {
+        "fillColor": "#ffc0cb",
+        "color": "#ffc0cb",
+        "fillOpacity": 0.6,
+        "weight": 2,
+    },
+)
 # display in Streamlit
 m.to_streamlit(height=700)
 
