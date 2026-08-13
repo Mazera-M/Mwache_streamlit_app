@@ -23,7 +23,6 @@ damterraces_url = "https://raw.githubusercontent.com/Mazera-M/Mwache_streamlit_a
 m.add_geojson(
     wruas_url,
     layer_name="mwache_wruas",
-    popup=None,
     style_function=lambda feature: {
         "fillColor": "#ffffff00",
         "color": "black",
