@@ -1,5 +1,4 @@
 import streamlit as st 
-from streamlit_folium import st_folium  # type: ignore
 import leafmap.foliumap as leafmap
 import geopandas as gpd
 import folium
@@ -70,10 +69,6 @@ m.add_geojson(
     },
 )
 geojson.add_to(m.folium_map)
-
-# Add layer control and show the map (streamlit_folium used here to get a robust streamlit render)
-m.add_layer_control()
-st_data = st_folium(m.folium_map, width=900, height=700)
 
 m.add_geojson(
     terraces6_url,
