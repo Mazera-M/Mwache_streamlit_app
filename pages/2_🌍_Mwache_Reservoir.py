@@ -4,7 +4,7 @@ import leafmap.foliumap as leafmap
 
 st.sidebar.title("About")
 st.sidebar.info("""
-    This map displays all the catchment interventions within the Mwache dam reservoir.
+    This map displays catchment interventions within the Mwache dam reservoir.
 """)
 
 logo = "https://i.imgur.com/UbOXYAU.png"
