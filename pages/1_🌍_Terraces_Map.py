@@ -27,7 +27,7 @@ damterraces_url = "https://raw.githubusercontent.com/Mazera-M/Mwache_streamlit_a
 gdf = gpd.read_file("data/mwache_wruas.geojson")
 # 2) Pick the property/column to use for the label.
 # Inspect columns if you're not sure what property contains the WRUA name:
-st.write("GeoDataFrame columns:", list(gdf.columns))
+# st.write("GeoDataFrame columns:", list(gdf.columns))
 # Set this to the property/column that you want to show as label
 label_field = "WRUA_NAME"  # <-- change this to the correct property, e.g. "WRUA_NAME" or similar
 
@@ -44,7 +44,7 @@ def style_function(feature):
 tooltip = folium.GeoJsonTooltip(
     fields=[label_field],
     aliases=[label_field.capitalize()],
-    localize=True,
+    localize=False,
     sticky=False,        # False = tooltip follows mouse, True = sticky on hover
 )
 
@@ -59,9 +59,6 @@ geojson = folium.GeoJson(
 m.add_geojson(
     wruas_url,
     layer_name="mwache_wruas",
-    info_mode="on_hover",
-    tooltip_property="WRUA_NAME",
-    popup_property=None,
     style_function=lambda feature: {
         "fillColor": "#ffffff00",
         "color": "black",
