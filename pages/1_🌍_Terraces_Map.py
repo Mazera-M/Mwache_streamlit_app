@@ -44,7 +44,7 @@ def style_function(feature):
 tooltip = folium.GeoJsonTooltip(
     fields=[label_field],
     aliases=[label_field.capitalize()],
-    localize=False,
+    localize=True,
     sticky=False,        # False = tooltip follows mouse, True = sticky on hover
 )
 
@@ -54,16 +54,6 @@ geojson = folium.GeoJson(
     style_function=style_function,
     tooltip=tooltip,
     popup=None,  # ensure no popup is created
-)
-
-m.add_geojson(
-    wruas_url,
-    layer_name="mwache_wruas",
-    style_function=lambda feature: {
-        "fillColor": "#ffffff00",
-        "color": "black",
-        "weight": 2,
-    },
 )
 
 m.add_geojson(
