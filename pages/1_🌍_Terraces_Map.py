@@ -68,7 +68,6 @@ m.add_geojson(
         "weight": 2,
     },
 )
-geojson.add_to(m.folium_map)
 
 m.add_geojson(
     terraces6_url,
