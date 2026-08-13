@@ -1,5 +1,8 @@
-import streamlit as st
+import streamlit as st 
+from streamlit_folium import st_folium  # type: ignore
 import leafmap.foliumap as leafmap
+import geopandas as gpd
+import folium
 
 
 st.sidebar.title("About")
@@ -21,6 +24,57 @@ terraces6_url = "https://raw.githubusercontent.com/Mazera-M/Mwache_streamlit_app
 terraces14_url = "https://raw.githubusercontent.com/Mazera-M/Mwache_streamlit_app/refs/heads/main/data/mwacheterraces_14.geojson"
 damterraces_url = "https://raw.githubusercontent.com/Mazera-M/Mwache_streamlit_app/refs/heads/main/data/MwacheDam_terraces.geojson"
 
+# 1) Load geojson
+gdf = gpd.read_file("data/mwache_wruas.geojson")
+# 2) Pick the property/column to use for the label.
+# Inspect columns if you're not sure what property contains the WRUA name:
+st.write("GeoDataFrame columns:", list(gdf.columns))
+# Set this to the property/column that you want to show as label
+label_field = "WRUA_NAME"  # <-- change this to the correct property, e.g. "WRUA_NAME" or similar
+
+# style function (optional) — customize color/opacity as needed
+def style_function(feature):
+    return {
+        "fillColor": "#ffffff00",
+        "color": "#ffffff00",
+        "weight": 1,
+        "fillOpacity": 0.3,
+    }
+
+# Build a folium.GeoJson with a tooltip and NO popup
+tooltip = folium.GeoJsonTooltip(
+    fields=[label_field],
+    aliases=[label_field.capitalize()],
+    localize=True,
+    sticky=False,        # False = tooltip follows mouse, True = sticky on hover
+)
+
+geojson = folium.GeoJson(
+    data=gdf.__geo_interface__,  # GeoJSON mapping
+    name="WRUAs",
+    style_function=style_function,
+    tooltip=tooltip,
+    popup=None,  # ensure no popup is created
+)
+
+m.add_geojson(
+    wruas_url,
+    layer_name="mwache_wruas",
+    info_mode="on_hover",
+    tooltip_property="WRUA_NAME",
+    popup_property=None,
+    style_function=lambda feature: {
+        "fillColor": "#ffffff00",
+        "color": "black",
+        "weight": 2,
+    },
+)
+geojson.add_to(m.folium_map)
+
+# Add layer control and show the map (streamlit_folium used here to get a robust streamlit render)
+m.add_layer_control()
+st_data = st_folium(m.folium_map, width=900, height=700)
+
 m.add_geojson(
     terraces6_url,
     layer_name="mwacheterraces_6",
@@ -37,19 +91,6 @@ m.add_geojson(
     style_function=lambda feature: {
         "fillColor": "brown",
         "color": "brown",
-        "weight": 2,
-    },
-)
-
-m.add_geojson(
-    wruas_url,
-    layer_name="mwache_wruas",
-    info_mode="on_hover",
-    tooltip_property="WRUA_NAME",
-    popup_property=None,
-    style_function=lambda feature: {
-        "fillColor": "#ffffff00",
-        "color": "black",
         "weight": 2,
     },
 )
