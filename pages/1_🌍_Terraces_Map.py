@@ -23,6 +23,16 @@ terraces6_url = "https://raw.githubusercontent.com/Mazera-M/Mwache_streamlit_app
 terraces14_url = "https://raw.githubusercontent.com/Mazera-M/Mwache_streamlit_app/refs/heads/main/data/mwacheterraces_14.geojson"
 damterraces_url = "https://raw.githubusercontent.com/Mazera-M/Mwache_streamlit_app/refs/heads/main/data/MwacheDam_terraces.geojson"
 
+m.add_geojson(
+    wruas_url,
+    layer_name="mwache_wruas",
+    style_function=lambda feature: {
+        "fillColor": "#ffffff00",
+        "color": "black",
+        "weight": 2,
+    },
+)
+
 # 1) Load geojson
 gdf = gpd.read_file("data/mwache_wruas.geojson")
 # 2) Pick the property/column to use for the label.
