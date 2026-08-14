@@ -83,7 +83,7 @@ st.markdown("""
 
 #######################
 # Load data
-df_interventions = pd.read_csv('https://raw.githubusercontent.com/Mazera-M/Mwache_streamlit_app/refs/heads/main/data/Mwache_Interventions.csv')
+df_ = pd.read_csv('https://raw.githubusercontent.com/Mazera-M/Mwache_streamlit_app/refs/heads/main/data/Mwache_Interventions.csv')
 # Use raw GitHub URLs so the GeoJSON files can be loaded directly
 m = leafmap.Map(center=[40, -100], zoom=4)
 axes_url = "https://raw.githubusercontent.com/Mazera-M/Mwache_streamlit_app/refs/heads/main/data/mwachedam_axes.geojson"
@@ -135,3 +135,29 @@ def make_heatmap(input_df, input_y, input_x, input_color, input_color_theme):
     # height=300
     return heatmap
 
+# Calculation year-over-year hectares cumulation for each intervention
+df_['Cumulative_Hectares'] = df_.groupby('Intervention')['Hectares'].cumsum()
+
+#######################
+# Dashboard Main Panel
+col = st.columns((1.5, 4.5, 2), gap='medium')
+
+with col[0]:
+    st.markdown('#### Total Hectares by Intervention')
+
+    # Sum all hectare-based columns for each intervention
+    ha_columns = [col for col in df_.columns if 'ha' in col.lower()]
+    if not ha_columns:
+        ha_columns = ['Hectares']
+
+    for col_name in ha_columns:
+        df_[col_name] = pd.to_numeric(df_[col_name].astype(str).str.replace(',', '', regex=False), errors='coerce')
+
+    intervention_totals = (
+        df_.groupby('Intervention', as_index=False)[ha_columns]
+        .sum()
+        .fillna(0)
+    )
+    st.dataframe(intervention_totals, use_container_width=True)
+
+ 
