@@ -83,10 +83,14 @@ st.markdown("""
 
 #######################
 # Load data
-df_reshaped = pd.read_csv('')
-
+df_interventions = pd.read_csv('https://raw.githubusercontent.com/Mazera-M/Mwache_streamlit_app/refs/heads/main/data/Mwache_Interventions.csv')
+# Use raw GitHub URLs so the GeoJSON files can be loaded directly
+m = leafmap.Map(center=[40, -100], zoom=4)
+axes_url = "https://raw.githubusercontent.com/Mazera-M/Mwache_streamlit_app/refs/heads/main/data/mwachedam_axes.geojson"
+reservoir_url = "https://raw.githubusercontent.com/Mazera-M/Mwache_streamlit_app/main/data/mwachedam_reservoir.geojson"
+wruas_url = "https://raw.githubusercontent.com/Mazera-M/Mwache_streamlit_app/refs/heads/main/data/mwache_wruas.geojson"
+       
 # Customize the sidebar
-
 st.sidebar.title("About")
 st.sidebar.info("""
     This multipage app displays maps and dashboards for the various mwache catchment restoration interventions 
@@ -97,12 +101,8 @@ st.sidebar.info("""
 logo = "https://i.imgur.com/UbOXYAU.png"
 st.sidebar.image(logo)
 
-# Use raw GitHub URLs so the GeoJSON files can be loaded directly
-m = leafmap.Map(center=[40, -100], zoom=4)
-axes_url = "https://raw.githubusercontent.com/Mazera-M/Mwache_streamlit_app/refs/heads/main/data/mwachedam_axes.geojson"
-reservoir_url = "https://raw.githubusercontent.com/Mazera-M/Mwache_streamlit_app/main/data/mwachedam_reservoir.geojson"
-wruas_url = "https://raw.githubusercontent.com/Mazera-M/Mwache_streamlit_app/refs/heads/main/data/mwache_wruas.geojson"
-
+#######################
+# Plots
 m.add_geojson(reservoir_url, layer_name="mwachedam_reservoir")
 m.add_geojson(axes_url, layer_name="mwachedam_axes")
 m.add_geojson(
@@ -115,6 +115,23 @@ m.add_geojson(
     },
 )
 
-m.to_streamlit(height=700)     
-        
-       
+m.to_streamlit(height=700)
+
+# Heatmap
+def make_heatmap(input_df, input_y, input_x, input_color, input_color_theme):
+    heatmap = alt.Chart(input_df).mark_rect().encode(
+            y=alt.Y(f'{input_y}:O', axis=alt.Axis(title="Hectares", titleFontSize=18, titlePadding=15, titleFontWeight=900, labelAngle=0)),
+            x=alt.X(f'{input_x}:O', axis=alt.Axis(title="Interventions", titleFontSize=18, titlePadding=15, titleFontWeight=900)),
+            color=alt.Color(f'max({input_color}):Q',
+                             legend=None,
+                             scale=alt.Scale(scheme=input_color_theme)),
+            stroke=alt.value('black'),
+            strokeWidth=alt.value(0.25),
+        ).properties(width=900
+        ).configure_axis(
+        labelFontSize=12,
+        titleFontSize=12
+        ) 
+    # height=300
+    return heatmap
+
