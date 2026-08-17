@@ -13,7 +13,7 @@ st.set_page_config(
     layout="wide",
 )
 
-st.subheader("Background")
+st.subheader("Mwache Catchment Restoration")
 
 st.markdown("""
 Mwache catchment covers an area of 3647 km² and stretches across coordinates 38.6327 west,
@@ -83,13 +83,13 @@ st.markdown("""
 
 #######################
 # Load data
-df_ = pd.read_csv('https://raw.githubusercontent.com/Mazera-M/Mwache_streamlit_app/refs/heads/main/data/Mwache_Interventions.csv')
+df_ = pd.read_csv('data/Mwache_Interventions.csv')
 # Use raw GitHub URLs so the GeoJSON files can be loaded directly
-m = leafmap.Map(center=[40, -100], zoom=4)
 axes_url = "https://raw.githubusercontent.com/Mazera-M/Mwache_streamlit_app/refs/heads/main/data/mwachedam_axes.geojson"
 reservoir_url = "https://raw.githubusercontent.com/Mazera-M/Mwache_streamlit_app/main/data/mwachedam_reservoir.geojson"
 wruas_url = "https://raw.githubusercontent.com/Mazera-M/Mwache_streamlit_app/refs/heads/main/data/mwache_wruas.geojson"
-       
+
+m = leafmap.Map(center=[40, -100], zoom=4)     
 # Customize the sidebar
 st.sidebar.title("About")
 st.sidebar.info("""
