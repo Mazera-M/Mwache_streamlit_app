@@ -68,11 +68,15 @@ if "Intervention" in df.columns:
             years_in_data = [col for col in year_columns if col in filtered_df.columns]
             
             if years_in_data:
-                melted_df = filtered_df.melt(id_vars=["Intervention"], value_vars=years_in_data, var_name="Financial Year", value_name="Hectares")
-                melted_df = melted_df[melted_df["Intervention"] != "Target area"]
+                all_years = [col for col in year_columns if col in df.columns]
+                melted_df = filtered_df.melt(id_vars=["Intervention"], value_vars=all_years, var_name="Financial Year", value_name="Hectares")
+                melted_df["Hectares"] = pd.to_numeric(melted_df["Hectares"], errors="coerce")
+                melted_df = melted_df[melted_df["Intervention"] != "Target area"].copy()
+                melted_df["Financial Year"] = pd.Categorical(melted_df["Financial Year"], categories=all_years, ordered=True)
+
                 chart = alt.Chart(melted_df).mark_bar().encode(
                     x=alt.X("Intervention:N", title="Intervention"),
-                    y=alt.Y("Financial Year:N", title="Financial Year"),
+                    y=alt.Y("Financial Year:N", title="Financial Year", sort=all_years, scale=alt.Scale(domain=all_years)),
                     color=alt.Color("Hectares:Q", title="Hectares Restored")
                 ).properties(width=700, height=400)
                 st.altair_chart(chart, use_container_width=True)
