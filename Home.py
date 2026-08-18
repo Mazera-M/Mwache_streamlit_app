@@ -3,8 +3,7 @@
 import streamlit as st
 import pandas as pd
 import altair as alt
-import plotly.express as px
-import leafmap.foliumap as leafmap
+from urllib.error import URLError
 
 #######################
 # Page configuration
@@ -23,7 +22,7 @@ This Catchment which is the source of water for the Mwache dam has undergone sig
 necessitating the need for restoration interventions. 
 
 Key Watershed interventions include:
-1. Sustainable Land Management (SLM) techniques; Terracing and soil stabilization, Gabion Construction
+1. Sustainable Land Management (SLM) techniques; Terracing and soil stabilization, Gabion Construction, Afforestation
 2. Livelihood Enhancement; Support for WRUAs, Farmer Field Schools (FFS) and Farmer Led Irrigation Development (FLID)
 
 """)
