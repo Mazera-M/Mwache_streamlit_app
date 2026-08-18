@@ -3,7 +3,8 @@
 import streamlit as st
 import pandas as pd
 import altair as alt
-from urllib.error import URLError
+import plotly.express as px
+import leafmap.foliumap as leafmap
 
 #######################
 # Page configuration
@@ -44,4 +45,4 @@ st.sidebar.image(logo)
 
 #######################
 # Load data
-   
+df = pd.read_csv("data/Mwache_Interventions.csv")  
