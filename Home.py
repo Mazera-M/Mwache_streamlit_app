@@ -45,4 +45,7 @@ st.sidebar.image(logo)
 
 #######################
 # Load data
-df = pd.read_csv("data/Mwache_Interventions.csv")  
+df = pd.read_csv("data/Mwache_Interventions.csv") 
+Intervention = st.multiselect(
+        "Choose interventions", list(df.index), ["Afforestation", "Terraces"]
+)       
