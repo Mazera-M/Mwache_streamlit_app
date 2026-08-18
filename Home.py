@@ -86,3 +86,28 @@ if "Intervention" in df.columns:
         st.info("No intervention selected or no matching records found.")
 else:
     st.error("The CSV file does not contain an 'Intervention' column.")  
+    
+##########
+st.info("Mwache Catchment Location Map.")
+
+# display the map of the Mwache Catchment
+m = leafmap.Map(center=[40, -100], zoom=9)
+m.add_basemap("HYBRID")
+
+wruas_url = "https://raw.githubusercontent.com/Mazera-M/Mwache_streamlit_app/refs/heads/main/data/mwache_wruas.geojson"
+axes_url = "https://raw.githubusercontent.com/Mazera-M/Mwache_streamlit_app/refs/heads/main/data/mwachedam_axes.geojson"
+reservoir_url = "https://raw.githubusercontent.com/Mazera-M/Mwache_streamlit_app/main/data/mwachedam_reservoir.geojson"
+
+m.add_geojson(reservoir_url, layer_name="mwachedam_reservoir")
+m.add_geojson(axes_url, layer_name="mwachedam_axes")
+m.add_geojson(
+    wruas_url,
+    layer_name="mwache_wruas",
+    style_function=lambda feature: {
+        "fillColor": "#ffffff00",
+        "color": "black",
+        "weight": 2,
+    },
+)
+# display in Streamlit
+m.to_streamlit(height=700)
