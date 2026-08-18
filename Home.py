@@ -53,7 +53,7 @@ if "Intervention" in df.columns:
     selected_interventions = st.multiselect(
         "Choose interventions",
         intervention_options,
-        ["Afforestation", "Terraces"],
+        ["Target area", "Afforestation"],
     )
 
     filtered_df = df[df["Intervention"].isin(selected_interventions)].copy() if selected_interventions else df.iloc[0:0].copy()
