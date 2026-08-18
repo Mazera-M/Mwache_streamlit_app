@@ -64,12 +64,19 @@ if "Intervention" in df.columns:
 
         if "Intervention" in filtered_df.columns:
             # Display bar chart for selected interventions
-            chart = alt.Chart(filtered_df).mark_bar().encode(
-                x=alt.X("Intervention:N", title="Intervention Type"),
-                y=alt.Y("Hectares()", title="Hectares Restored"),
-                color="Intervention:N"
-            ).properties(width=700, height=400)
-            st.altair_chart(chart, use_container_width=True)
+            year_columns = ["Baseline", "15/16", "16/17", "17/18", "18/19", "19/20", "20/21", "21/22", "22/23", "23/24", "24/25", "25/26"]
+            years_in_data = [col for col in year_columns if col in filtered_df.columns]
+            
+            if years_in_data:
+                melted_df = filtered_df.melt(id_vars=["Intervention"], value_vars=years_in_data, var_name="Financial Year", value_name="Hectares")
+                chart = alt.Chart(melted_df).mark_bar().encode(
+                    x=alt.X("Intervention:N", title="Intervention Type"),
+                    y=alt.Y("Hectares:Q", title="Hectares Restored"),
+                    color="Financial Year:N"
+                ).properties(width=700, height=400)
+                st.altair_chart(chart, use_container_width=True)
+            else:
+                st.warning("Financial year columns not found in the data.")
     else:
         st.info("No intervention selected or no matching records found.")
 else:
