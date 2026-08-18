@@ -70,9 +70,9 @@ if "Intervention" in df.columns:
             if years_in_data:
                 melted_df = filtered_df.melt(id_vars=["Intervention"], value_vars=years_in_data, var_name="Financial Year", value_name="Hectares")
                 chart = alt.Chart(melted_df).mark_bar().encode(
-                    x=alt.X("Intervention:N", title="Intervention Type"),
+                    x=alt.X("Financial Year:N", title="Financial Year"),
                     y=alt.Y("Hectares:Q", title="Hectares Restored"),
-                    color="Financial Year:N"
+                    color="Intervention:N"
                 ).properties(width=700, height=400)
                 st.altair_chart(chart, use_container_width=True)
             else:
