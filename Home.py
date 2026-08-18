@@ -63,8 +63,14 @@ if "Intervention" in df.columns:
         st.dataframe(filtered_df, use_container_width=True)
 
         if "Intervention" in filtered_df.columns:
-            st.bar_chart(filtered_df["Intervention"].value_counts())
+            # Display bar chart for selected interventions
+            chart = alt.Chart(filtered_df).mark_bar().encode(
+                x=alt.X("Intervention:N", title="Intervention Type"),
+                y=alt.Y("Hectares()", title="Hectares Restored"),
+                color="Intervention:N"
+            ).properties(width=700, height=400)
+            st.altair_chart(chart, use_container_width=True)
     else:
         st.info("No intervention selected or no matching records found.")
 else:
-    st.error("The CSV file does not contain an 'Intervention' column.")       
+    st.error("The CSV file does not contain an 'Intervention' column.")  
