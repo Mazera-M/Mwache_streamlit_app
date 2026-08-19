@@ -105,11 +105,14 @@ with interventions_column:
 
                     chart = alt.Chart(melted_df).mark_rect().encode(
                         x=alt.X(
+                            "Intervention:N",
+                            title="Intervention",
+                        ),
+                        y=alt.Y(
                             "Financial Year:O",
                             title="Financial Year",
                             sort=all_years,
                         ),
-                        y=alt.Y("Intervention:N", title="Intervention"),
                         color=alt.Color(
                             "Hectares:Q",
                             title="Hectares Restored",
