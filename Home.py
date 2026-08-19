@@ -13,9 +13,11 @@ st.set_page_config(
     layout="wide",
 )
 
-st.subheader("Mwache Catchment Restoration")
+left_col, map_col, right_col = st.columns([1, 1.5, 1])
 
-st.markdown("""
+with left_col:
+    st.subheader("Mwache Catchment Restoration")
+    st.markdown("""
 Mwache catchment covers an area of 3647 km² and stretches across coordinates 38.6327 west,
 39.5416 East, and -3.53513 North, -4.10244 South and stretches across Taita Taveta, Kwale, and
 Kilifi Counties.
@@ -28,7 +30,7 @@ Key Watershed interventions include:
 
 """)
 
-st.info("Click on the left sidebar menu to navigate to the different map layers.")
+    st.info("Click on the left sidebar menu to navigate to the different map layers.")
 
 alt.themes.enable("dark")
 
@@ -45,100 +47,99 @@ st.sidebar.image(logo)
 
 #######################
 # Load data
-
 interventions_df = pd.read_csv("data/Mwache_Interventions.csv")
 beneficiaries_df = pd.read_csv("data/Mwache_Beneficiaries.csv")
 
-# Display intervention data
-df = interventions_df
+with right_col:
+    # Display intervention data
+    df = interventions_df
 
-if "Intervention" in df.columns:
-    intervention_options = sorted(df["Intervention"].dropna().unique().tolist())
-    selected_interventions = st.multiselect(
-        "Choose interventions",
-        intervention_options,
-        ["Target area", "Terraces"],
-    )
-
-    filtered_df = df[df["Intervention"].isin(selected_interventions)].copy() if selected_interventions else df.iloc[0:0].copy()
-
-    if not filtered_df.empty:
-        st.write(f"Showing {len(filtered_df)} records for the selected intervention(s): {', '.join(selected_interventions)}")
-        st.dataframe(filtered_df, use_container_width=True)
-
-        if "Intervention" in filtered_df.columns:
-            # Display bar chart for selected interventions
-            year_columns = ["Baseline", "15/16", "16/17", "17/18", "18/19", "19/20", "20/21", "21/22", "22/23", "23/24", "24/25", "25/26"]
-            years_in_data = [col for col in year_columns if col in filtered_df.columns]
-            
-            if years_in_data:
-                all_years = [col for col in year_columns if col in df.columns]
-                melted_df = filtered_df.melt(id_vars=["Intervention"], value_vars=all_years, var_name="Financial Year", value_name="Hectares")
-                melted_df["Hectares"] = pd.to_numeric(melted_df["Hectares"], errors="coerce")
-                melted_df = melted_df[melted_df["Intervention"] != "Target area"].copy()
-                melted_df["Financial Year"] = pd.Categorical(melted_df["Financial Year"], categories=all_years, ordered=True)
-
-                chart = alt.Chart(melted_df).mark_bar().encode(
-                    x=alt.X("Intervention:N", title="Intervention"),
-                    y=alt.Y("Financial Year:N", title="Financial Year", sort=all_years, scale=alt.Scale(domain=all_years)),
-                    color=alt.Color("Hectares:Q", title="Hectares Restored")
-                ).properties(width=700, height=400)
-                st.altair_chart(chart, use_container_width=True)
-            else:
-                st.warning("Financial year columns not found in the data.")
-    else:
-        st.info("No intervention selected or no matching records found.")
-else:
-    st.error("The CSV file does not contain an 'Intervention' column.")  
-
-# select multiple beneficiaries 
-beneficiary_column = "Beneficiaries" if "Beneficiaries" in beneficiaries_df.columns else None
-
-if beneficiary_column:
-    beneficiary_options = sorted(
-        set(beneficiaries_df[beneficiary_column].dropna().astype(str).unique())
-        | {"Direct Beneficiaries SLM", "Indirect Beneficiaries SLM"}
-    )
-    selected_beneficiaries = st.multiselect(
-        "Choose beneficiaries",
-        beneficiary_options,
-        key="selected_beneficiaries",
-    )
-
-    if selected_beneficiaries:
-        filtered_beneficiaries = beneficiaries_df[
-            beneficiaries_df[beneficiary_column]
-            .astype(str)
-            .isin(selected_beneficiaries)
-        ].copy()
-        st.write(
-            f"Showing {len(filtered_beneficiaries)} records for the selected beneficiary(ies)."
+    if "Intervention" in df.columns:
+        intervention_options = sorted(df["Intervention"].dropna().unique().tolist())
+        selected_interventions = st.multiselect(
+            "Choose interventions",
+            intervention_options,
+            ["Target area", "Terraces"],
         )
-        st.dataframe(filtered_beneficiaries, use_container_width=True)
-else:
-    st.error("The beneficiaries CSV does not contain a beneficiary name column.")
+
+        filtered_df = df[df["Intervention"].isin(selected_interventions)].copy() if selected_interventions else df.iloc[0:0].copy()
+
+        if not filtered_df.empty:
+            st.write(f"Showing {len(filtered_df)} records for the selected intervention(s): {', '.join(selected_interventions)}")
+            st.dataframe(filtered_df, use_container_width=True)
+
+            if "Intervention" in filtered_df.columns:
+                year_columns = ["Baseline", "15/16", "16/17", "17/18", "18/19", "19/20", "20/21", "21/22", "22/23", "23/24", "24/25", "25/26"]
+                years_in_data = [col for col in year_columns if col in filtered_df.columns]
+            
+                if years_in_data:
+                    all_years = [col for col in year_columns if col in df.columns]
+                    melted_df = filtered_df.melt(id_vars=["Intervention"], value_vars=all_years, var_name="Financial Year", value_name="Hectares")
+                    melted_df["Hectares"] = pd.to_numeric(melted_df["Hectares"], errors="coerce")
+                    melted_df = melted_df[melted_df["Intervention"] != "Target area"].copy()
+                    melted_df["Financial Year"] = pd.Categorical(melted_df["Financial Year"], categories=all_years, ordered=True)
+
+                    chart = alt.Chart(melted_df).mark_bar().encode(
+                        x=alt.X("Intervention:N", title="Intervention"),
+                        y=alt.Y("Financial Year:N", title="Financial Year", sort=all_years, scale=alt.Scale(domain=all_years)),
+                        color=alt.Color("Hectares:Q", title="Hectares Restored")
+                    ).properties(width=700, height=400)
+                    st.altair_chart(chart, use_container_width=True)
+                else:
+                    st.warning("Financial year columns not found in the data.")
+        else:
+            st.info("No intervention selected or no matching records found.")
+    else:
+        st.error("The CSV file does not contain an 'Intervention' column.")
+
+    # select multiple beneficiaries
+    beneficiary_column = "Beneficiaries" if "Beneficiaries" in beneficiaries_df.columns else None
+
+    if beneficiary_column:
+        beneficiary_options = sorted(
+            set(beneficiaries_df[beneficiary_column].dropna().astype(str).unique())
+            | {"Direct Beneficiaries SLM", "Indirect Beneficiaries SLM"}
+        )
+        selected_beneficiaries = st.multiselect(
+            "Choose beneficiaries",
+            beneficiary_options,
+            key="selected_beneficiaries",
+        )
+
+        if selected_beneficiaries:
+            filtered_beneficiaries = beneficiaries_df[
+                beneficiaries_df[beneficiary_column]
+                .astype(str)
+                .isin(selected_beneficiaries)
+            ].copy()
+            st.write(
+                f"Showing {len(filtered_beneficiaries)} records for the selected beneficiary(ies)."
+            )
+            st.dataframe(filtered_beneficiaries, use_container_width=True)
+    else:
+        st.error("The beneficiaries CSV does not contain a beneficiary name column.")
     
 ##########
-st.info("Mwache Catchment Location Map.")
+with map_col:
+    st.info("Mwache Catchment Location Map.")
 
 # display the map of the Mwache Catchment
-m = leafmap.Map(center=[40, -100], zoom=9)
-m.add_basemap("HYBRID")
+    m = leafmap.Map(center=[40, -100], zoom=9)
+    m.add_basemap("HYBRID")
 
-wruas_url = "https://raw.githubusercontent.com/Mazera-M/Mwache_streamlit_app/refs/heads/main/data/mwache_wruas.geojson"
-axes_url = "https://raw.githubusercontent.com/Mazera-M/Mwache_streamlit_app/refs/heads/main/data/mwachedam_axes.geojson"
-reservoir_url = "https://raw.githubusercontent.com/Mazera-M/Mwache_streamlit_app/main/data/mwachedam_reservoir.geojson"
+    wruas_url = "https://raw.githubusercontent.com/Mazera-M/Mwache_streamlit_app/refs/heads/main/data/mwache_wruas.geojson"
+    axes_url = "https://raw.githubusercontent.com/Mazera-M/Mwache_streamlit_app/refs/heads/main/data/mwachedam_axes.geojson"
+    reservoir_url = "https://raw.githubusercontent.com/Mazera-M/Mwache_streamlit_app/main/data/mwachedam_reservoir.geojson"
 
-m.add_geojson(reservoir_url, layer_name="mwachedam_reservoir")
-m.add_geojson(axes_url, layer_name="mwachedam_axes")
-m.add_geojson(
-    wruas_url,
-    layer_name="mwache_wruas",
-    style_function=lambda feature: {
-        "fillColor": "#ffffff00",
-        "color": "black",
-        "weight": 2,
-    },
-)
-# display in Streamlit
-m.to_streamlit(height=700)
+    m.add_geojson(reservoir_url, layer_name="mwachedam_reservoir")
+    m.add_geojson(axes_url, layer_name="mwachedam_axes")
+    m.add_geojson(
+        wruas_url,
+        layer_name="mwache_wruas",
+        style_function=lambda feature: {
+            "fillColor": "#ffffff00",
+            "color": "black",
+            "weight": 2,
+        },
+    )
+    m.to_streamlit(height=700)
