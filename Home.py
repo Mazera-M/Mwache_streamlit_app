@@ -82,7 +82,7 @@ with interventions_column:
         selected_interventions = st.multiselect(
             "Choose interventions",
             intervention_options,
-            ["Terraces", "Farmer Field Schools"],
+            ["Terraces"]
         )
 
         filtered_df = df[df["Intervention"].isin(selected_interventions)].copy() if selected_interventions else df.iloc[0:0].copy()
@@ -106,7 +106,7 @@ with interventions_column:
                         x=alt.X("Intervention:N", title="Intervention"),
                         y=alt.Y("Financial Year:N", title="Financial Year", sort=all_years, scale=alt.Scale(domain=all_years)),
                         color=alt.Color("Hectares:Q", title="Hectares Restored")
-                    ).properties(width=600, height=400)
+                    ).properties(width=200, height=300)
                     st.altair_chart(chart, use_container_width=True)
                 else:
                     st.warning("Financial year columns not found in the data.")
