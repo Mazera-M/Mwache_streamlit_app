@@ -96,8 +96,18 @@ with interventions_column:
                 years_in_data = [col for col in year_columns if col in filtered_df.columns]
             
                 if years_in_data:
-                    all_years = [col for col in year_columns if col in df.columns]
-                    melted_df = filtered_df.melt(id_vars=["Intervention"], value_vars=all_years, var_name="Financial Year", value_name="Hectares")
+                    # Build a plotting dataframe with all requested year columns,
+                    # including columns that are absent from the source data.
+                    plot_df = filtered_df.reindex(
+                        columns=["Intervention"] + year_columns,
+                        fill_value=pd.NA,
+                    )
+                    melted_df = plot_df.melt(
+                        id_vars=["Intervention"],
+                        value_vars=year_columns,
+                        var_name="Financial Year",
+                        value_name="Hectares",
+                    )
                     melted_df["Hectares"] = pd.to_numeric(melted_df["Hectares"], errors="coerce")
                     melted_df = melted_df[melted_df["Intervention"] != "Target area"].copy()
                     melted_df = melted_df.dropna(subset=["Hectares"])
@@ -107,9 +117,6 @@ with interventions_column:
                         ordered=True,
                     )
 
-                    all_hectares = pd.to_numeric(
-                        df[all_years].stack(), errors="coerce"
-                    ).dropna()
                     chart = (
                         alt.Chart(melted_df)
                         .mark_rect()
