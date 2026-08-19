@@ -111,7 +111,7 @@ with interventions_column:
                         .mark_rect()
                         .encode(
                             x=alt.X("Intervention:N", title="Intervention"),
-                            y=alt.Y("Financial Year:O", title="Year"),
+                            y=alt.Y("all_years:O", title="Financial Year"),
                             color=alt.Color("Hectares:Q", title="Hectares"),
                             tooltip=["Intervention:N", "Financial Year:O", "Hectares:Q"],
                         )
