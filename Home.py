@@ -13,7 +13,7 @@ st.set_page_config(
     layout="wide",
 )
 
-top_left, top_right = st.columns(2)
+top_left, top_right = st.columns([1, 2])
 
 with top_left:
     st.subheader("Mwache Catchment Restoration")
@@ -32,6 +32,7 @@ Key Watershed interventions include:
 
 with top_right:
     st.info("Mwache Catchment Location Map.")
+    st.info("Click on the left sidebar menu to navigate to the different map layers.")
     m = leafmap.Map(center=[40, -100], zoom=9)
     m.add_basemap("HYBRID")
 
@@ -51,8 +52,6 @@ with top_right:
         },
     )
     m.to_streamlit(height=700)
-
-st.info("Click on the left sidebar menu to navigate to the different map layers.")
 
 alt.themes.enable("dark")
 
