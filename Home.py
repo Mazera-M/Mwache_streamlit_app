@@ -133,7 +133,7 @@ with interventions_column:
                             color=alt.Color(
                                 "Hectares:Q",
                                 title="Hectares",
-                                scale=alt.Scale(scheme="green"),
+                                scale=alt.Scale(scheme="darkgoldenrod"),
                             ),
                             tooltip=["Intervention:N", "Financial Year:O", "Hectares:Q"],
                         )
