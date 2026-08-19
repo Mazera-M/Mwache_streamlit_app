@@ -92,15 +92,11 @@ with interventions_column:
             st.dataframe(filtered_df, use_container_width=True)
 
             if "Intervention" in filtered_df.columns:
-                year_columns = [
-                    col for col in filtered_df.columns
-                    if col == "Baseline" or (
-                        isinstance(col, str)
-                        and len(col) == 5
-                        and col[2] == "/"
-                        and col[:2].isdigit()
-                        and col[3:].isdigit()
-                    )
+                # Use the full reporting period even when a year is not yet
+                # present as a column in the source CSV.
+                year_columns = ["Baseline"] + [
+                    f"{year:02d}/{(year + 1) % 100:02d}"
+                    for year in range(15, 26)
                 ]
                 years_in_data = year_columns
             
@@ -129,7 +125,11 @@ with interventions_column:
                         .mark_rect()
                         .encode(
                             x=alt.X("Intervention:N", title="Intervention"),
-                            y=alt.Y("Financial Year:O", title="Financial Year"),
+                            y=alt.Y(
+                                "Financial Year:O",
+                                title="Financial Year",
+                                scale=alt.Scale(domain=years_in_data),
+                            ),
                             color=alt.Color("Hectares:Q", title="Hectares"),
                             tooltip=["Intervention:N", "Financial Year:O", "Hectares:Q"],
                         )
