@@ -111,7 +111,7 @@ with interventions_column:
                         y=alt.Y(
                             "Financial Year:O",
                             title="Financial Year",
-                            sort=all_years,
+                            sort=year_columns,
                         ),
                         color=alt.Color(
                             "Hectares:Q",
