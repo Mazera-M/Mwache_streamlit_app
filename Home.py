@@ -70,6 +70,7 @@ st.sidebar.image(logo)
 # Load data
 interventions_df = pd.read_csv("data/Mwache_Interventions.csv")
 beneficiaries_df = pd.read_csv("data/Mwache_Beneficiaries.csv")
+formations_developments_df = pd.read_csv("data/Mwache_formations_developments.csv")
 
 interventions_column, beneficiaries_column = st.columns(2)
 
@@ -148,9 +149,9 @@ with interventions_column:
                         )
                     )
                     st.altair_chart(chart, use_container_width=True)
-        
+  
+# Display selected multiple beneficiaries     
 with beneficiaries_column:
-    # select multiple beneficiaries
     beneficiary_column = "Beneficiaries" if "Beneficiaries" in beneficiaries_df.columns else None
 
     if beneficiary_column:
@@ -176,4 +177,30 @@ with beneficiaries_column:
             st.dataframe(filtered_beneficiaries, use_container_width=True)
     else:
         st.error("The beneficiaries CSV does not contain a beneficiary name column.")
+
+# Display formations and developments 
+formation_column = "formations and developments"
+
+if formation_column in formations_developments_df.columns:
+    formation_options = sorted(
+        formations_developments_df[formation_column].dropna().astype(str).unique().tolist()
+    )
+    selected_formations = st.multiselect(
+        "Choose formations and developments",
+        formation_options,
+        key="selected_formations_developments",
+    )
+
+    if selected_formations:
+        filtered_formations = formations_developments_df[
+            formations_developments_df[formation_column]
+            .astype(str)
+            .isin(selected_formations)
+        ].copy()
+        st.write(
+            f"Showing {len(filtered_formations)} records for the selected formation(s) and development(s)."
+        )
+        st.dataframe(filtered_formations, use_container_width=True)
+else:
+    st.error("The formations and developments CSV does not contain a formation or development column.")
     
