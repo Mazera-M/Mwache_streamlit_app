@@ -178,29 +178,30 @@ with beneficiaries_column:
     else:
         st.error("The beneficiaries CSV does not contain a beneficiary name column.")
 
-# Display formations and developments 
-formation_column = "formations and developments"
+    # Display formations and developments in the beneficiaries column
+    formation_column = "formations and developments"
 
-if formation_column in formations_developments_df.columns:
-    formation_options = sorted(
-        formations_developments_df[formation_column].dropna().astype(str).unique().tolist()
-    )
-    selected_formations = st.multiselect(
-        "Choose formations and developments",
-        formation_options,
-        key="selected_formations_developments",
-    )
-
-    if selected_formations:
-        filtered_formations = formations_developments_df[
-            formations_developments_df[formation_column]
-            .astype(str)
-            .isin(selected_formations)
-        ].copy()
-        st.write(
-            f"Showing {len(filtered_formations)} records for the selected formation(s) and development(s)."
+    if formation_column in formations_developments_df.columns:
+        formation_options = sorted(
+            set(formations_developments_df[formation_column].dropna().astype(str).unique())
+            | {"FFS", "WRUAs"}
         )
-        st.dataframe(filtered_formations, use_container_width=True)
-else:
-    st.error("The formations and developments CSV does not contain a formation or development column.")
+        selected_formations = st.multiselect(
+            "Choose formations and developments",
+            formation_options,
+            key="selected_formations_developments",
+        )
+
+        if selected_formations:
+            filtered_formations = formations_developments_df[
+                formations_developments_df[formation_column]
+                .astype(str)
+                .isin(selected_formations)
+            ].copy()
+            st.write(
+                f"Showing {len(filtered_formations)} records for the selected formation(s) and development(s)."
+            )
+            st.dataframe(filtered_formations, use_container_width=True)
+    else:
+        st.error("The formations and developments CSV does not contain a formation or development column.")
     
