@@ -178,12 +178,21 @@ with beneficiaries_column:
     else:
         st.error("The beneficiaries CSV does not contain a beneficiary name column.")
 
+    # Add space between the beneficiaries and formations/developments controls.
+    st.markdown("<div style='height: 1.5rem;'></div>", unsafe_allow_html=True)
+
     # Display formations and developments in the beneficiaries column
     formation_column = "formations and developments"
 
     if formation_column in formations_developments_df.columns:
+        formation_values = (
+            formations_developments_df[formation_column]
+            .dropna()
+            .astype(str)
+            .str.strip()
+        )
         formation_options = sorted(
-            set(formations_developments_df[formation_column].dropna().astype(str).unique())
+            set(formation_values.unique())
             | {"FFS", "WRUAs"}
         )
         selected_formations = st.multiselect(
@@ -196,6 +205,7 @@ with beneficiaries_column:
             filtered_formations = formations_developments_df[
                 formations_developments_df[formation_column]
                 .astype(str)
+                .str.strip()
                 .isin(selected_formations)
             ].copy()
             st.write(
