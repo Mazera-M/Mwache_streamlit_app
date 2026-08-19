@@ -13,7 +13,8 @@ st.set_page_config(
     layout="wide",
 )
 
-left_col, map_col, right_col = st.columns([1, 1.5, 1])
+left_col, right_col = st.columns([1, 1.5])
+map_col = right_col
 
 with left_col:
     st.subheader("Mwache Catchment Restoration")
