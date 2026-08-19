@@ -108,8 +108,6 @@ with interventions_column:
                             "Financial Year:O",
                             title="Financial Year",
                             sort=all_years,
-                            scale=alt.Scale(domain=all_years),
-                            axis=alt.Axis(values=all_years, labelAngle=0),
                         ),
                         y=alt.Y("Intervention:N", title="Intervention"),
                         color=alt.Color(
