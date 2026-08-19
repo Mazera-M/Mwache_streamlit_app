@@ -111,11 +111,15 @@ with interventions_column:
                         var_name="Financial Year",
                         value_name="Hectares",
                     )
-                    melted_df["Hectares"] = pd.to_numeric(melted_df["Hectares"], errors="coerce")
+                    melted_df["Hectares"] = pd.to_numeric(
+                        melted_df["Hectares"].astype(str).str.replace(",", "", regex=False),
+                        errors="coerce",
+                    )
                     melted_df = melted_df[melted_df["Intervention"] != "Target area"].copy()
                     # Keep every intervention/year cell in the heatmap so that
                     # all rows receive a colour, including years with no value.
                     melted_df["Hectares"] = melted_df["Hectares"].fillna(0)
+                    hectares_max = melted_df["Hectares"].max()
                     melted_df["Financial Year"] = pd.Categorical(
                         melted_df["Financial Year"],
                         categories=years_in_data,
@@ -135,7 +139,10 @@ with interventions_column:
                             color=alt.Color(
                                 "Hectares:Q",
                                 title="Hectares",
-                                scale=alt.Scale(scheme="viridis"),
+                                scale=alt.Scale(
+                                    scheme="viridis",
+                                    domain=[0, hectares_max],
+                                ),
                             ),
                             tooltip=["Intervention:N", "Financial Year:O", "Hectares:Q"],
                         )
