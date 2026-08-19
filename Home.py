@@ -106,7 +106,7 @@ with interventions_column:
                         x=alt.X("Intervention:N", title="Intervention"),
                         y=alt.Y("Financial Year:N", title="Financial Year", sort=all_years, scale=alt.Scale(domain=all_years)),
                         color=alt.Color("Hectares:Q", title="Hectares Restored")
-                    ).properties(width=300, height=200)
+                    ).properties(width=600, height=400)
                     st.altair_chart(chart, use_container_width=True)
                 else:
                     st.warning("Financial year columns not found in the data.")
