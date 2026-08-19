@@ -46,7 +46,47 @@ st.sidebar.image(logo)
 #######################
 # Load data
 
-df = pd.read_csv("data/Mwache_Interventions.csv")
+interventions_df = pd.read_csv("data/Mwache_Interventions.csv")
+beneficiaries_df = pd.read_csv("data/Mwache_Beneficiaries.csv")
+
+# Allow users to select multiple beneficiaries from the beneficiaries dataset.
+st.subheader("Beneficiary Selection")
+beneficiary_column = next(
+    (
+        column
+        for column in ["Beneficiary", "Beneficiaries", "Beneficiary Name", "Name"]
+        if column in beneficiaries_df.columns
+    ),
+    None,
+)
+
+if beneficiary_column:
+    beneficiary_options = sorted(
+        set(beneficiaries_df[beneficiary_column].dropna().astype(str).unique())
+        | {"Direct Beneficiaries SLM", "Indirect Beneficiaries SLM"}
+    )
+    selected_beneficiaries = st.multiselect(
+        "Choose beneficiaries",
+        beneficiary_options,
+        key="selected_beneficiaries",
+    )
+
+    if selected_beneficiaries:
+        filtered_beneficiaries = beneficiaries_df[
+            beneficiaries_df[beneficiary_column]
+            .astype(str)
+            .isin(selected_beneficiaries)
+        ].copy()
+        st.write(
+            f"Showing {len(filtered_beneficiaries)} records for the selected beneficiary(ies)."
+        )
+        st.dataframe(filtered_beneficiaries, use_container_width=True)
+    else:
+        st.info("Select one or more beneficiaries to display their records.")
+else:
+    st.error("The beneficiaries CSV does not contain a beneficiary name column.")
+
+df = interventions_df
 
 if "Intervention" in df.columns:
     intervention_options = sorted(df["Intervention"].dropna().unique().tolist())
