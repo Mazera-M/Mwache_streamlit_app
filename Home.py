@@ -101,7 +101,11 @@ with interventions_column:
                     melted_df["Hectares"] = pd.to_numeric(melted_df["Hectares"], errors="coerce")
                     melted_df = melted_df[melted_df["Intervention"] != "Target area"].copy()
                     melted_df = melted_df.dropna(subset=["Hectares"])
-                    melted_df["Financial Year"] = pd.Categorical(melted_df["Financial Year"], categories=all_years, ordered=True)
+                    melted_df["Financial Year"] = pd.Categorical(
+                        melted_df["Financial Year"],
+                        categories=year_columns,
+                        ordered=True,
+                    )
 
                     all_hectares = pd.to_numeric(
                         df[all_years].stack(), errors="coerce"
@@ -111,7 +115,7 @@ with interventions_column:
                         .mark_rect()
                         .encode(
                             x=alt.X("Intervention:N", title="Intervention"),
-                            y=alt.Y("all_years:O", title="Financial Year"),
+                            y=alt.Y("Financial Year:O", title="Financial Year"),
                             color=alt.Color("Hectares:Q", title="Hectares"),
                             tooltip=["Intervention:N", "Financial Year:O", "Hectares:Q"],
                         )
