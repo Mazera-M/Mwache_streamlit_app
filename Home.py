@@ -100,6 +100,7 @@ with interventions_column:
                     melted_df = filtered_df.melt(id_vars=["Intervention"], value_vars=all_years, var_name="Financial Year", value_name="Hectares")
                     melted_df["Hectares"] = pd.to_numeric(melted_df["Hectares"], errors="coerce")
                     melted_df = melted_df[melted_df["Intervention"] != "Target area"].copy()
+                    melted_df = melted_df.dropna(subset=["Hectares"])
                     melted_df["Financial Year"] = pd.Categorical(melted_df["Financial Year"], categories=all_years, ordered=True)
 
                     chart = alt.Chart(melted_df).mark_bar().encode(
@@ -111,8 +112,13 @@ with interventions_column:
                             scale=alt.Scale(domain=year_columns),
                             axis=alt.Axis(values=year_columns, labelAngle=0),
                         ),
-                        color=alt.Color("Hectares:Q", title="Hectares Restored")
-                    ).properties(width=200, height=300)
+                        color=alt.Color(
+                            "Hectares:Q",
+                            title="Hectares Restored",
+                            scale=alt.Scale(scheme="viridis"),
+                            legend=alt.Legend(title="Hectares Restored"),
+                        )
+                    ).properties(width=200, height=400)
                     st.altair_chart(chart, use_container_width=True)
                 else:
                     st.warning("Financial year columns not found in the data.")
