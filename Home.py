@@ -106,37 +106,18 @@ with interventions_column:
                     all_hectares = pd.to_numeric(
                         df[all_years].stack(), errors="coerce"
                     ).dropna()
-
-                    chart = alt.Chart(melted_df).mark_rect().encode(
-                        x=alt.X(
-                            "Intervention:N",
-                            title="Intervention",
-                        ),
-                        y=alt.Y(
-                            "Financial Year:O",
-                            title="Financial Year",
-                            sort=year_columns,
-                            scale=alt.Scale(domain=year_columns),
-                        ),
-                        color=alt.Color(
-                            "Hectares:Q",
-                            title="Hectares Restored",
-                            scale=alt.Scale(
-                                scheme="viridis",
-                                domain=[0, float(all_hectares.max())]
-                                if not all_hectares.empty else [0, 1],
-                            ),
-                            legend=alt.Legend(title="Hectares Restored"),
+                    chart = (
+                        alt.Chart(melted_df)
+                        .mark_rect()
+                        .encode(
+                            x=alt.X("Intervention:N", title="Intervention"),
+                            y=alt.Y("Financial Year:O", title="Year"),
+                            color=alt.Color("Hectares:Q", title="Hectares"),
+                            tooltip=["Intervention:N", "Financial Year:O", "Hectares:Q"],
                         )
-                    ).properties(width=600, height=400) 
+                    )
                     st.altair_chart(chart, use_container_width=True)
-                else:
-                    st.warning("Financial year columns not found in the data.")
-        else:
-            st.info("No intervention selected or no matching records found.")
-    else:
-        st.error("The CSV file does not contain an 'Intervention' column.")
-
+        
 with beneficiaries_column:
     # select multiple beneficiaries
     beneficiary_column = "Beneficiaries" if "Beneficiaries" in beneficiaries_df.columns else None
