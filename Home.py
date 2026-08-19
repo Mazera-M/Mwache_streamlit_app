@@ -112,6 +112,7 @@ with interventions_column:
                             "Financial Year:O",
                             title="Financial Year",
                             sort=year_columns,
+                            scale=alt.Scale(domain=year_columns),
                         ),
                         color=alt.Color(
                             "Hectares:Q",
