@@ -113,7 +113,9 @@ with interventions_column:
                     )
                     melted_df["Hectares"] = pd.to_numeric(melted_df["Hectares"], errors="coerce")
                     melted_df = melted_df[melted_df["Intervention"] != "Target area"].copy()
-                    melted_df = melted_df.dropna(subset=["Hectares"])
+                    # Keep every intervention/year cell in the heatmap so that
+                    # all rows receive a colour, including years with no value.
+                    melted_df["Hectares"] = melted_df["Hectares"].fillna(0)
                     melted_df["Financial Year"] = pd.Categorical(
                         melted_df["Financial Year"],
                         categories=years_in_data,
