@@ -92,7 +92,7 @@ else:
     st.error("The CSV file does not contain an 'Intervention' column.")  
 
 # select multiple beneficiaries 
-beneficiary_column = "beneficiaries" if "beneficiaries" in beneficiaries_df.columns else None
+beneficiary_column = "Beneficiaries" if "Beneficiaries" in beneficiaries_df.columns else None
 
 if beneficiary_column:
     beneficiary_options = sorted(
