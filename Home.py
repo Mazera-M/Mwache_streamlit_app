@@ -107,9 +107,9 @@ with interventions_column:
                         y=alt.Y(
                             "Financial Year:O",
                             title="Financial Year",
-                            sort=all_years,
-                            scale=alt.Scale(domain=all_years),
-                            axis=alt.Axis(values=all_years, labelAngle=0),
+                            sort=year_columns,
+                            scale=alt.Scale(domain=year_columns),
+                            axis=alt.Axis(values=year_columns, labelAngle=0),
                         ),
                         color=alt.Color("Hectares:Q", title="Hectares Restored")
                     ).properties(width=200, height=300)
