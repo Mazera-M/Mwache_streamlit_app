@@ -49,6 +49,7 @@ st.sidebar.image(logo)
 interventions_df = pd.read_csv("data/Mwache_Interventions.csv")
 beneficiaries_df = pd.read_csv("data/Mwache_Beneficiaries.csv")
 
+# Display intervention data
 df = interventions_df
 
 if "Intervention" in df.columns:
@@ -90,15 +91,8 @@ if "Intervention" in df.columns:
 else:
     st.error("The CSV file does not contain an 'Intervention' column.")  
 
-# Allow users to select multiple beneficiaries from the beneficiaries dataset.
-beneficiary_column = next(
-    (
-        column
-        for column in ["Beneficiary", "Beneficiaries", "Beneficiary Name", "Name"]
-        if column in beneficiaries_df.columns
-    ),
-    None,
-)
+# select multiple beneficiaries 
+beneficiary_column = "beneficiaries" if "beneficiaries" in beneficiaries_df.columns else None
 
 if beneficiary_column:
     beneficiary_options = sorted(
@@ -121,8 +115,6 @@ if beneficiary_column:
             f"Showing {len(filtered_beneficiaries)} records for the selected beneficiary(ies)."
         )
         st.dataframe(filtered_beneficiaries, use_container_width=True)
-    else:
-        st.info("Select one or more beneficiaries to display their records.")
 else:
     st.error("The beneficiaries CSV does not contain a beneficiary name column.")
     
