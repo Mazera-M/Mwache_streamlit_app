@@ -13,8 +13,9 @@ st.set_page_config(
     layout="wide",
 )
 
-# Use the original page-wide layout.
-if True:
+top_left, top_right = st.columns(2)
+
+with top_left:
     st.subheader("Mwache Catchment Restoration")
     st.markdown("""
 Mwache catchment covers an area of 3647 km² and stretches across coordinates 38.6327 west,
@@ -29,7 +30,29 @@ Key Watershed interventions include:
 
 """)
 
-    st.info("Click on the left sidebar menu to navigate to the different map layers.")
+with top_right:
+    st.info("Mwache Catchment Location Map.")
+    m = leafmap.Map(center=[40, -100], zoom=9)
+    m.add_basemap("HYBRID")
+
+    wruas_url = "https://raw.githubusercontent.com/Mazera-M/Mwache_streamlit_app/refs/heads/main/data/mwache_wruas.geojson"
+    axes_url = "https://raw.githubusercontent.com/Mazera-M/Mwache_streamlit_app/refs/heads/main/data/mwachedam_axes.geojson"
+    reservoir_url = "https://raw.githubusercontent.com/Mazera-M/Mwache_streamlit_app/main/data/mwachedam_reservoir.geojson"
+
+    m.add_geojson(reservoir_url, layer_name="mwachedam_reservoir")
+    m.add_geojson(axes_url, layer_name="mwachedam_axes")
+    m.add_geojson(
+        wruas_url,
+        layer_name="mwache_wruas",
+        style_function=lambda feature: {
+            "fillColor": "#ffffff00",
+            "color": "black",
+            "weight": 2,
+        },
+    )
+    m.to_streamlit(height=700)
+
+st.info("Click on the left sidebar menu to navigate to the different map layers.")
 
 alt.themes.enable("dark")
 
@@ -49,7 +72,9 @@ st.sidebar.image(logo)
 interventions_df = pd.read_csv("data/Mwache_Interventions.csv")
 beneficiaries_df = pd.read_csv("data/Mwache_Beneficiaries.csv")
 
-if True:
+interventions_column, beneficiaries_column = st.columns(2)
+
+with interventions_column:
     # Display intervention data
     df = interventions_df
 
@@ -91,6 +116,7 @@ if True:
     else:
         st.error("The CSV file does not contain an 'Intervention' column.")
 
+with beneficiaries_column:
     # select multiple beneficiaries
     beneficiary_column = "Beneficiaries" if "Beneficiaries" in beneficiaries_df.columns else None
 
@@ -118,27 +144,3 @@ if True:
     else:
         st.error("The beneficiaries CSV does not contain a beneficiary name column.")
     
-##########
-if True:
-    st.info("Mwache Catchment Location Map.")
-
-# display the map of the Mwache Catchment
-    m = leafmap.Map(center=[40, -100], zoom=9)
-    m.add_basemap("HYBRID")
-
-    wruas_url = "https://raw.githubusercontent.com/Mazera-M/Mwache_streamlit_app/refs/heads/main/data/mwache_wruas.geojson"
-    axes_url = "https://raw.githubusercontent.com/Mazera-M/Mwache_streamlit_app/refs/heads/main/data/mwachedam_axes.geojson"
-    reservoir_url = "https://raw.githubusercontent.com/Mazera-M/Mwache_streamlit_app/main/data/mwachedam_reservoir.geojson"
-
-    m.add_geojson(reservoir_url, layer_name="mwachedam_reservoir")
-    m.add_geojson(axes_url, layer_name="mwachedam_axes")
-    m.add_geojson(
-        wruas_url,
-        layer_name="mwache_wruas",
-        style_function=lambda feature: {
-            "fillColor": "#ffffff00",
-            "color": "black",
-            "weight": 2,
-        },
-    )
-    m.to_streamlit(height=700)
