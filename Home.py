@@ -103,6 +103,10 @@ with interventions_column:
                     melted_df = melted_df.dropna(subset=["Hectares"])
                     melted_df["Financial Year"] = pd.Categorical(melted_df["Financial Year"], categories=all_years, ordered=True)
 
+                    all_hectares = pd.to_numeric(
+                        df[all_years].stack(), errors="coerce"
+                    ).dropna()
+
                     chart = alt.Chart(melted_df).mark_rect().encode(
                         x=alt.X(
                             "Intervention:N",
@@ -117,7 +121,11 @@ with interventions_column:
                         color=alt.Color(
                             "Hectares:Q",
                             title="Hectares Restored",
-                            scale=alt.Scale(scheme="viridis"),
+                            scale=alt.Scale(
+                                scheme="viridis",
+                                domain=[0, float(all_hectares.max())]
+                                if not all_hectares.empty else [0, 1],
+                            ),
                             legend=alt.Legend(title="Hectares Restored"),
                         )
                     ).properties(width=600, height=400) 
