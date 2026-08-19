@@ -104,9 +104,15 @@ with interventions_column:
 
                     chart = alt.Chart(melted_df).mark_bar().encode(
                         x=alt.X("Intervention:N", title="Intervention"),
-                        y=alt.Y("Financial Year:N", title="Financial Year", sort=all_years, scale=alt.Scale(domain=all_years)),
+                        y=alt.Y(
+                            "Financial Year:O",
+                            title="Financial Year",
+                            sort=all_years,
+                            scale=alt.Scale(domain=all_years),
+                            axis=alt.Axis(values=all_years, labelAngle=0),
+                        ),
                         color=alt.Color("Hectares:Q", title="Hectares Restored")
-                    ).properties(width=50, height=50)
+                    ).properties(width=200, height=300)
                     st.altair_chart(chart, use_container_width=True)
                 else:
                     st.warning("Financial year columns not found in the data.")
