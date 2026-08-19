@@ -92,19 +92,26 @@ with interventions_column:
             st.dataframe(filtered_df, use_container_width=True)
 
             if "Intervention" in filtered_df.columns:
-                year_columns = ["Baseline", "15/16", "16/17", "17/18", "18/19", "19/20", "20/21", "21/22", "22/23", "23/24", "24/25", "25/26"]
-                years_in_data = [col for col in year_columns if col in filtered_df.columns]
+                year_columns = [
+                    col for col in filtered_df.columns
+                    if col == "Baseline" or (
+                        isinstance(col, str)
+                        and len(col) == 5
+                        and col[2] == "/"
+                        and col[:2].isdigit()
+                        and col[3:].isdigit()
+                    )
+                ]
+                years_in_data = year_columns
             
                 if years_in_data:
-                    # Build a plotting dataframe with all requested year columns,
-                    # including columns that are absent from the source data.
                     plot_df = filtered_df.reindex(
-                        columns=["Intervention"] + year_columns,
+                        columns=["Intervention"] + years_in_data,
                         fill_value=pd.NA,
                     )
                     melted_df = plot_df.melt(
                         id_vars=["Intervention"],
-                        value_vars=year_columns,
+                        value_vars=years_in_data,
                         var_name="Financial Year",
                         value_name="Hectares",
                     )
@@ -113,7 +120,7 @@ with interventions_column:
                     melted_df = melted_df.dropna(subset=["Hectares"])
                     melted_df["Financial Year"] = pd.Categorical(
                         melted_df["Financial Year"],
-                        categories=year_columns,
+                        categories=years_in_data,
                         ordered=True,
                     )
 
