@@ -29,10 +29,10 @@ Key Watershed interventions include:
 2. Livelihood Enhancement; Support for WRUAs, Farmer Field Schools (FFS) and Farmer Led Irrigation Development (FLID)
 
 """)
+    st.info("Click on the left sidebar menu to navigate to the different mwache intervention map layers.")
 
 with top_right:
     st.info("Mwache Catchment Location Map.")
-    st.info("Click on the left sidebar menu to navigate to the different map layers.")
     m = leafmap.Map(center=[40, -100], zoom=9)
     m.add_basemap("HYBRID")
 
@@ -51,7 +51,7 @@ with top_right:
             "weight": 2,
         },
     )
-    m.to_streamlit(height=700)
+    m.to_streamlit(height=500)
 
 alt.themes.enable("dark")
 
