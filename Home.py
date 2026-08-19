@@ -13,10 +13,8 @@ st.set_page_config(
     layout="wide",
 )
 
-left_col, right_col = st.columns([1, 1.5])
-map_col = right_col
-
-with left_col:
+# Use the original page-wide layout.
+if True:
     st.subheader("Mwache Catchment Restoration")
     st.markdown("""
 Mwache catchment covers an area of 3647 km² and stretches across coordinates 38.6327 west,
@@ -51,7 +49,7 @@ st.sidebar.image(logo)
 interventions_df = pd.read_csv("data/Mwache_Interventions.csv")
 beneficiaries_df = pd.read_csv("data/Mwache_Beneficiaries.csv")
 
-with right_col:
+if True:
     # Display intervention data
     df = interventions_df
 
@@ -121,7 +119,7 @@ with right_col:
         st.error("The beneficiaries CSV does not contain a beneficiary name column.")
     
 ##########
-with map_col:
+if True:
     st.info("Mwache Catchment Location Map.")
 
 # display the map of the Mwache Catchment
