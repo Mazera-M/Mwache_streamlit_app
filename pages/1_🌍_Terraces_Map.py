@@ -36,7 +36,7 @@ hectare_column = find_column(["hectare", "hectares", "ha", "area"])
 if km_column and hectare_column:
     totals_df = pd.DataFrame(
         {
-            "Measure": ["Total conserved length (km)", "Total conserved area (ha)"],
+            "Measure": ["Total length (km)", "conserved area (ha)"],
             "Total": [
                 pd.to_numeric(all_terraces_df[km_column], errors="coerce").sum(),
                 pd.to_numeric(all_terraces_df[hectare_column], errors="coerce").sum(),
