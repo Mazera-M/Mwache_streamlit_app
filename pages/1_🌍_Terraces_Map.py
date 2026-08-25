@@ -18,15 +18,25 @@ m = leafmap.Map(center=[40, -100], zoom=9)
 m.add_basemap("HYBRID")
 
 # Load data
-all_terraces_df = pd.read_csv("data/all_terraces.csv")
+all_terraces_df = pd.read_csv("data/all_terraces.csv", encoding="utf-8-sig")
+# CSV exports can contain a BOM or extra whitespace in column names.
+all_terraces_df.columns = all_terraces_df.columns.astype(str).str.replace("\ufeff", "", regex=False).str.strip()
 
 def display_financial_year_filter():
-    if 'Financial_Year' not in all_terraces_df.columns:
-        st.sidebar.error("The data does not contain a 'Financial_Year' column.")
-        return None
+    financial_year_column = next(
+        (column for column in all_terraces_df.columns
+         if column.lower().replace(" ", "_") == "financial_year"),
+        None,
+    )
+    if financial_year_column is None:
+        st.sidebar.error(
+            "The data does not contain a 'Financial_Year' column. "
+            f"Available columns: {', '.join(all_terraces_df.columns)}"
+        )
+        st.stop()
 
     financial_years = (
-        all_terraces_df['Financial_Year']
+        all_terraces_df[financial_year_column]
         .dropna()
         .astype(str)
         .drop_duplicates()
@@ -38,11 +48,11 @@ def display_financial_year_filter():
         st.sidebar.warning("No financial years are available.")
         return None
 
-    return st.sidebar.selectbox('Financial Year', financial_years)
+    return financial_year_column, st.sidebar.selectbox('Financial Year', financial_years)
 
-selected_financial_year = display_financial_year_filter()
+financial_year_column, selected_financial_year = display_financial_year_filter()
 filtered_terraces_df = all_terraces_df[
-    all_terraces_df['Financial_Year'].astype(str) == selected_financial_year
+    all_terraces_df[financial_year_column].astype(str) == selected_financial_year
 ]
 wrua_counts = filtered_terraces_df['WRUA Name'].value_counts().to_dict()
 maximum_count = max(wrua_counts.values(), default=0)
