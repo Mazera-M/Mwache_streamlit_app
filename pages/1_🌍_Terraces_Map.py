@@ -21,12 +21,28 @@ m.add_basemap("HYBRID")
 all_terraces_df = pd.read_csv("data/all_terraces.csv")
 
 def display_financial_year_filter():
-    financial_years = all_terraces_df['Financial_Year'].unique()
+    if 'Financial_Year' not in all_terraces_df.columns:
+        st.sidebar.error("The data does not contain a 'Financial_Year' column.")
+        return None
+
+    financial_years = (
+        all_terraces_df['Financial_Year']
+        .dropna()
+        .astype(str)
+        .drop_duplicates()
+        .sort_values()
+        .tolist()
+    )
+
+    if not financial_years:
+        st.sidebar.warning("No financial years are available.")
+        return None
+
     return st.sidebar.selectbox('Financial Year', financial_years)
 
 selected_financial_year = display_financial_year_filter()
 filtered_terraces_df = all_terraces_df[
-    all_terraces_df['Financial_Year'] == selected_financial_year
+    all_terraces_df['Financial_Year'].astype(str) == selected_financial_year
 ]
 wrua_counts = filtered_terraces_df['WRUA Name'].value_counts().to_dict()
 maximum_count = max(wrua_counts.values(), default=0)
