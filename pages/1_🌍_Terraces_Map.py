@@ -25,38 +25,31 @@ def display_financial_year_filter():
     return st.sidebar.selectbox('Financial Year', financial_years)
 
 selected_financial_year = display_financial_year_filter()
-filtered_terraces = all_terraces_df[
+filtered_terraces_df = all_terraces_df[
     all_terraces_df['Financial_Year'] == selected_financial_year
 ]
-
-def normalise(value):
-    return str(value).strip().casefold()
-
-# Collect WRUA names from the filtered records.  This supports CSV columns
-# such as WRUA, WRUA_Name, or WRUA Name without requiring a fixed schema.
-wrua_columns = [
-    column for column in filtered_terraces.columns
-    if 'wrua' in str(column).casefold()
-]
-filtered_wruas = {
-    normalise(value)
-    for column in wrua_columns
-    for value in filtered_terraces[column].dropna()
-}
-
+wrua_counts = filtered_terraces_df['WRUA Name'].value_counts().to_dict()
+maximum_count = max(wrua_counts.values(), default=0)
 
 def wrua_style(feature):
-    properties = feature.get('properties', {})
-    matched = any(
-        normalise(value) in filtered_wruas
-        for key, value in properties.items()
-        if 'wrua' in str(key).casefold()
-    )
+    wrua_name = feature.get('properties', {}).get('name')
+    count = wrua_counts.get(wrua_name, 0)
+    ratio = count / maximum_count if maximum_count else 0
+    if ratio == 0:
+        color = '#f7fbff'
+    elif ratio <= 0.25:
+        color = '#c6dbef'
+    elif ratio <= 0.5:
+        color = '#6baed6'
+    elif ratio <= 0.75:
+        color = '#2171b5'
+    else:
+        color = '#08306b'
     return {
-        'fillColor': '#00ff00' if matched else '#ffffff00',
-        'color': '#008000' if matched else 'black',
-        'weight': 4 if matched else 2,
-        'fillOpacity': 0.45 if matched else 0,
+        'fillColor': color,
+        'color': '#555555',
+        'weight': 1,
+        'fillOpacity': 0.7,
     }
 
 wruas_url = "https://raw.githubusercontent.com/Mazera-M/Mwache_streamlit_app/refs/heads/main/data/mwache_wruas.geojson"
