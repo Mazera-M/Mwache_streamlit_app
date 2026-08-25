@@ -17,16 +17,6 @@ st.subheader("Terraces Map")
 # Load data
 all_terraces_df = pd.read_csv("data/all_terraces.csv")
 
-st.markdown("**Financial Year**")
-financial_years = (
-    all_terraces_df[["financial_year"]]
-    .dropna()
-    .drop_duplicates()
-    .sort_values("financial_year")
-    .reset_index(drop=True)
-)
-st.dataframe(financial_years, hide_index=True, use_container_width=True)
-
 m = leafmap.Map(center=[40, -100], zoom=9)
 m.add_basemap("HYBRID")
 
