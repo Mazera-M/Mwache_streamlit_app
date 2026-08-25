@@ -17,26 +17,42 @@ st.subheader("Terraces Map")
 # Load data
 all_terraces_df = pd.read_csv("data/all_terraces.csv")
 
-# Filter the terrace records by financial year.
-if "financial_year" not in all_terraces_df.columns:
-    st.error("The terraces dataset must contain a 'financial_year' column.")
-    st.stop()
+# Display totals for conserved terrace length and area.
+def find_column(candidates):
+    normalized_columns = {
+        column.lower().replace("_", " ").replace("-", " "): column
+        for column in all_terraces_df.columns
+    }
+    for candidate in candidates:
+        for normalized, original in normalized_columns.items():
+            if candidate in normalized:
+                return original
+    return None
 
-financial_years = sorted(
-    all_terraces_df["financial_year"].dropna().astype(str).unique()
-)
-selected_financial_year = st.sidebar.selectbox(
-    "Filter by financial year", ["All"] + financial_years
-)
 
-if selected_financial_year == "All":
-    terraces_df = all_terraces_df
-else:
-    terraces_df = all_terraces_df[
-        all_terraces_df["financial_year"].astype(str) == selected_financial_year
-    ]
+km_column = find_column(["km", "kilometre", "kilometer", "length"])
+hectare_column = find_column(["hectare", "hectares", "ha", "area"])
 
-st.caption(f"Showing {len(terraces_df)} terrace records")
+if km_column and hectare_column:
+    totals_df = pd.DataFrame(
+        {
+            "Measure": ["Total conserved length (km)", "Total conserved area (ha)"],
+            "Total": [
+                pd.to_numeric(all_terraces_df[km_column], errors="coerce").sum(),
+                pd.to_numeric(all_terraces_df[hectare_column], errors="coerce").sum(),
+            ],
+        }
+    )
+    st.subheader("Hectares Conserved")
+    conservation_chart = alt.Chart(totals_df).mark_bar().encode(
+        x=alt.X("Total:Q", title="Total"),
+        y=alt.Y("Measure:N", sort="-x", title=None),
+        color=alt.Color("Measure:N", legend=None),
+        tooltip=[alt.Tooltip("Total:Q", format=",.2f")],
+    )
+    st.altair_chart(conservation_chart, use_container_width=True)
+
+
 
 m = leafmap.Map(center=[40, -100], zoom=9)
 m.add_basemap("HYBRID")
