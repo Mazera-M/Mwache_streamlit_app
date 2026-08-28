@@ -19,6 +19,7 @@ m.add_basemap("HYBRID")
 axes_url = "https://raw.githubusercontent.com/Mazera-M/Mwache_streamlit_app/refs/heads/main/data/mwachedam_axes.geojson"
 reservoir_url = "https://raw.githubusercontent.com/Mazera-M/Mwache_streamlit_app/main/data/mwachedam_reservoir.geojson"
 damterraces_url = "https://raw.githubusercontent.com/Mazera-M/Mwache_streamlit_app/refs/heads/main/data/MwacheDam_terraces.geojson"
+treeareas_url = "https://raw.githubusercontent.com/Mazera-M/Mwache_streamlit_app/refs/heads/main/data/tree_areas.geojson"
 
 m.add_geojson(reservoir_url, layer_name="mwachedam_reservoir")
 m.add_geojson(axes_url, layer_name="mwachedam_axes")
@@ -29,6 +30,17 @@ m.add_geojson(
         "fillColor": "#ffc0cb",
         "color": "#ffc0cb",
         "fillOpacity": 0.6,
+        "weight": 2,
+    },
+)
+
+m.add_geojson(
+    treeareas_url,
+    layer_name="tree_areas",
+    style_function=lambda feature: {
+        "fillColor": "dark green",
+        "color": "dark green",
+        "fillOpacity": 0.1,
         "weight": 2,
     },
 )
