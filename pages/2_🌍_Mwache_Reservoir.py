@@ -37,8 +37,8 @@ m.add_geojson(
     treeareas_url,
     layer_name="tree_areas",
     style_function=lambda feature: {
-        "fillColor": "dark green",
-        "color": "dark green",
+        "fillColor": "darkgreen",
+        "color": "darkgreen",
         "fillOpacity": 0.1,
         "weight": 4,
     },
