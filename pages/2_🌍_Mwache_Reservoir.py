@@ -33,7 +33,6 @@ m.add_geojson(
         "weight": 2,
     },
 )
-
 m.add_geojson(
     treeareas_url,
     layer_name="tree_areas",
@@ -41,7 +40,7 @@ m.add_geojson(
         "fillColor": "dark green",
         "color": "dark green",
         "fillOpacity": 0.1,
-        "weight": 2,
+        "weight": 4,
     },
 )
 # display in Streamlit
